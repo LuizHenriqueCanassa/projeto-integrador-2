@@ -1,0 +1,10 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: projeto-integrador-2-db
+    environment:
+      POSTGRES_USER: user-projeto-integrador-2
+      POSTGRES_PASSWORD: ut0M5cenlZqxpm8
+      POSTGRES_DB: projeto-integrador-2
+    ports:
+      - 5432:5432
