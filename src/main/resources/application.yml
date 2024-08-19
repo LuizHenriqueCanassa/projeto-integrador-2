@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: projet-integrador-2
+  datasource:
+    url: jdbc:postgresql://localhost:5432/projeto-integrador-2
+    username: user-projeto-integrador-2
+    password: ut0M5cenlZqxpm8
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+server:
+  port: 8080
