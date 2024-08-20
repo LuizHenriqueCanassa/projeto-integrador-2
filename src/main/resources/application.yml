@@ -7,7 +7,9 @@ spring:
     password: ut0M5cenlZqxpm8
   jpa:
     show-sql: true
-    hibernate:
-      ddl-auto: update
+  security:
+    user:
+      name: projeto-integrador-2
+      password: projeto-integrador-2
 server:
   port: 8080
