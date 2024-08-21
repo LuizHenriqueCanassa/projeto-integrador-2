@@ -5,11 +5,5 @@ spring:
     url: jdbc:postgresql://localhost:5432/projeto-integrador-2
     username: user-projeto-integrador-2
     password: ut0M5cenlZqxpm8
-  jpa:
-    show-sql: true
-  security:
-    user:
-      name: projeto-integrador-2
-      password: projeto-integrador-2
 server:
   port: 8080
