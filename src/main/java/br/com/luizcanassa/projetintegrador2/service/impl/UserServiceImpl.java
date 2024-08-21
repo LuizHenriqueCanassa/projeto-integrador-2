@@ -1,7 +1,5 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
-import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import br.com.luizcanassa.projetintegrador2.repository.UserRepository;
 import br.com.luizcanassa.projetintegrador2.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
