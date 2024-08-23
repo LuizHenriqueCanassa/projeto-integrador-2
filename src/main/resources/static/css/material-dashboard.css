@@ -23464,7 +23464,7 @@ hr.horizontal.gray-light {
 
 .navbar .navbar-brand {
   color: #344767;
-  font-size: 0.875rem;
+  font-size: 0.950rem;
 }
 
 .navbar .nav-link {
@@ -24438,7 +24438,9 @@ hr.horizontal.gray-light {
 
 .sidenav .navbar-brand,
 .sidenav .navbar-heading {
-  display: block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (min-width: 1200px) {

@@ -22,6 +22,8 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "users_sequence")
     private Long id;
 
+    private String name;
+
     @Column(nullable = false, unique = true)
     private String username;
 

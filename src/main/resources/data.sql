@@ -1,5 +1,6 @@
 CREATE TABLE USERS (
                        ID INTEGER NOT NULL,
+                       NAME VARCHAR(100) NOT NULL,
                        USERNAME VARCHAR(100) NOT NULL,
                        PASSWORD VARCHAR(100) NOT NULL,
                        CREATED_AT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -33,15 +34,15 @@ ALTER TABLE USERS_ROLES ADD CONSTRAINT FK_ROLES_ID FOREIGN KEY (ROLE_ID) REFEREN
 
 --senha-admin
 INSERT INTO USERS
-(ID, USERNAME, PASSWORD)
+(ID, NAME, USERNAME, PASSWORD)
 VALUES
-    (nextval('SQ_USERS_ID'), 'admin', '$2a$12$IOOSbHD9umswOg2LOHl86uKcwKWnLfBmLdKgqGLF1GRaJaff8j3W.');
+    (nextval('SQ_USERS_ID'), 'Administrador', 'admin', '$2a$12$IOOSbHD9umswOg2LOHl86uKcwKWnLfBmLdKgqGLF1GRaJaff8j3W.');
 
 --senha-user
 INSERT INTO USERS
-(ID, USERNAME, PASSWORD)
+(ID, NAME, USERNAME, PASSWORD)
 VALUES
-    (nextval('SQ_USERS_ID'), 'user', '$2a$12$MEoC5oOz11Df4DYqOjL/QeutqOthlcWVe3y7vkRku2gwvUU6lyZmO');
+    (nextval('SQ_USERS_ID'), 'Usuario', 'user', '$2a$12$MEoC5oOz11Df4DYqOjL/QeutqOthlcWVe3y7vkRku2gwvUU6lyZmO');
 
 INSERT INTO ROLES
 (ID, NAME)
