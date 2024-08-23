@@ -21,6 +21,12 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
+                                    <div class="alert alert-success alert-dismissible text-white" role="alert" th:if="${param.logout != null}">
+                                        <span class="text-sm">Você foi desconectado com sucesso.</span>
+                                        <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
                                     <form method="post" th:action="@{/login}" role="form" class="text-start">
                                         <div class="input-group input-group-outline my-3">
                                             <label class="form-label">Usuário</label>

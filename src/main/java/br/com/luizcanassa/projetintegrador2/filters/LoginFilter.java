@@ -1,4 +1,4 @@
-package br.com.luizcanassa.projetintegrador2.filter;
+package br.com.luizcanassa.projetintegrador2.filters;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
