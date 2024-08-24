@@ -27,19 +27,6 @@ public class UsersController {
 
     @GetMapping
     public String index(final Model model) {
-//        final var authorities = customUserDetails.getAuthorities()
-//                .stream()
-//                .map(GrantedAuthority::getAuthority)
-//                .collect(Collectors.toList());
-
-//        List<UserDTO> users = userService.findAll()
-//                .stream()
-//                .filter(userDTO -> {
-//                    if (!authorities.contains("ROLE_ROOT")) {
-//                        return !userDTO.getIsRoot();
-//                    }
-//                    return true;
-//                }).collect(Collectors.toList());
 
         model.addAttribute("users", userService.findAll());
         model.addAttribute("page", PageEnum.USERS);

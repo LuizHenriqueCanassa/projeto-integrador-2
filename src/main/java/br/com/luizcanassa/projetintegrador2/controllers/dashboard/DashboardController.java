@@ -18,6 +18,7 @@ public class DashboardController {
 
     @GetMapping
     public String index(final Model model) {
+
         model.addAttribute("page", PageEnum.DASHBOARD);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
