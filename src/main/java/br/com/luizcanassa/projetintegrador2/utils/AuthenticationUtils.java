@@ -19,6 +19,10 @@ public final class AuthenticationUtils {
         return authentication().getDisplayName();
     }
 
+    public static String getUsername() {
+        return authentication().getUsername();
+    }
+
     public static Boolean isRoot() {
         return getUserAuthorities().contains("ROLE_ROOT");
     }
