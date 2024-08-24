@@ -44,8 +44,13 @@
                         <td class="align-middle text-center">
                           <p class="text-secondary text-xs font-weight-bold" th:text="${#temporals.format(user.getCreatedAt(), 'dd/MM/yyyy')}"></p>
                         </td>
-                        <td class="align-middle text-center">
-                          Editar
+                        <td class="align-middle text-center w-20">
+                          <a href="#">
+                            <button class="btn bg-gradient-info mb-0 toast-btn" type="button">Editar</button>
+                          </a>
+                          <button class="btn bg-gradient-success mb-0 toast-btn" type="button" th:if="${!user.getActive()}">Ativar</button>
+                          <button class="btn bg-gradient-warning mb-0 toast-btn" type="button" th:if="${user.getActive()}">Inativar</button>
+                          <button class="btn bg-gradient-danger mb-0 toast-btn" type="button" th:data-target="'dangerToast' + ${user.getId()}">Deletar</button>
                         </td>
                       </tr>
                     </tbody>
@@ -57,6 +62,25 @@
         </div>
       </div>
     </main>
+    <div class="position-fixed top-1 end-1 z-index-2">
+      <div th:each="user : ${users}">
+        <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" th:id="'dangerToast' + ${user.getId()}" aria-atomic="true">
+          <div class="toast-header border-0">
+            <i class="material-icons text-danger me-2">campaign</i>
+            <span class="me-auto text-gradient text-danger font-weight-bold">Deletar Usuário</span>
+            <small class="text-body"></small>
+            <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+          </div>
+          <hr class="horizontal dark m-0">
+          <div class="toast-body">
+            Deseja deletar o usuario <span th:text="${user.getUsername()}"></span>?
+            <br>
+            <button class="btn bg-gradient-danger mb-0 toast-btn" type="button">Sim</button>
+            <button class="btn bg-gradient-warning mb-0 toast-btn" type="button">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div th:replace="~{/template/scripts :: footer_scripts}"></div>
   </body>
 </html>

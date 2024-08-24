@@ -19,7 +19,7 @@
           <span class="nav-link-text ms-1">Página Inicial</span>
         </a>
       </li>
-      <div th:if="${#lists.contains(roles,  'ROLE_ADMIN')}">
+      <div th:if="${#lists.contains(roles, 'ROLE_ADMIN') || #lists.contains(roles, 'ROLE_ROOT')}">
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Sistema</h6>
         </li>

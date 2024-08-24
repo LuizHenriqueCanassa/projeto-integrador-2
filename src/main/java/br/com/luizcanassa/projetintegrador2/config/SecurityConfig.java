@@ -1,17 +1,22 @@
 package br.com.luizcanassa.projetintegrador2.config;
 
+import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
 import br.com.luizcanassa.projetintegrador2.filters.DashboardFilter;
 import br.com.luizcanassa.projetintegrador2.filters.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import java.security.Principal;
 
 @Configuration
 @EnableWebSecurity
@@ -22,10 +27,15 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers(
-                                "/resources/**", "/static/**",
+                                "/resources/**",
+                                "/static/**",
+                                "/js/**",
+                                "/css/**",
+                                "/img/**",
+                                "/json/**",
                                 "/login"
                         ).permitAll()
-                        .requestMatchers("/dashboard/users/**").hasRole("ADMIN")
+                        .requestMatchers("/dashboard/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ROOT")
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -38,7 +48,8 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout")
                 )
                 .exceptionHandling(handle -> handle
-                        .accessDeniedPage("/dashboard/403"))
+                        .accessDeniedPage("/dashboard/403")
+                )
                 .addFilterAfter(new LoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAfter(new DashboardFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();

@@ -7,5 +7,7 @@ spring:
     password: ut0M5cenlZqxpm8
   mvc:
     static-path-pattern: /static/**
+  jpa:
+    open-in-view: off
 server:
   port: 8080
