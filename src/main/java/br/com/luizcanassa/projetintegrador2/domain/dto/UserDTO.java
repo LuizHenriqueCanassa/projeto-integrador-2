@@ -18,5 +18,7 @@ public class UserDTO {
 
     private Boolean active;
 
+    private Boolean isRoot;
+
     private LocalDateTime createdAt;
 }

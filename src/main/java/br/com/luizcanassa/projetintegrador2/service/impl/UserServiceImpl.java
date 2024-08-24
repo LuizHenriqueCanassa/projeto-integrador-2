@@ -2,9 +2,7 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
-import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
-import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
-import br.com.luizcanassa.projetintegrador2.domain.projections.UserProjection;
+import br.com.luizcanassa.projetintegrador2.mapper.UserDTOMapper;
 import br.com.luizcanassa.projetintegrador2.repository.UserRepository;
 import br.com.luizcanassa.projetintegrador2.service.UserService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
@@ -15,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,21 +41,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public List<UserDTO> findAll() {
-        List<UserProjection> users;
-
-        users = AuthenticationUtils.isRoot()
-                ? userRepository.findAllUsers()
-                : userRepository.findAllByRolesNotIn(Collections.singletonList("ROLE_ROOT"));
-
-        return users
+        return userRepository.findAll()
                 .stream()
-                .map(user -> new UserDTO(
-                        user.getId(),
-                        user.getName(),
-                        user.getUsername(),
-                        user.getActive(),
-                        user.getCreatedAt()
-                        )
-                ).collect(Collectors.toList());
+                .map(UserDTOMapper::userToUserDTO)
+                .filter(userDTO -> {
+                    if (AuthenticationUtils.isRoot()) {
+                        return true;
+                    } else return AuthenticationUtils.isRoot() || !userDTO.getIsRoot();
+                })
+                .collect(Collectors.toList());
     }
+
 }
