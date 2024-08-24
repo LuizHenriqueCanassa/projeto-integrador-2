@@ -11,14 +11,19 @@ public class CustomUserDetails extends User {
 
     private final String displayName;
 
+    private final Boolean userActive;
+
+
     public CustomUserDetails(
             String displayName,
             String username,
             String password,
-            Collection<? extends GrantedAuthority> authorities
+            Collection<? extends GrantedAuthority> authorities,
+            Boolean userActive
     ) {
-        super(username, password, authorities);
+        super(username, password, userActive, true, true, true, authorities);
         this.displayName = displayName;
+        this.userActive = userActive;
     }
 
 }

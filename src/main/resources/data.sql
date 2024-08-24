@@ -3,6 +3,7 @@ CREATE TABLE USERS (
                        NAME VARCHAR(100) NOT NULL,
                        USERNAME VARCHAR(100) NOT NULL,
                        PASSWORD VARCHAR(100) NOT NULL,
+                       ACTIVE BOOLEAN  NOT NULL DEFAULT 1,
                        CREATED_AT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                        UPDATED_AT TIMESTAMP
 );

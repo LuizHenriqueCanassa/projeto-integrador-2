@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/dashboard")
-public class DashboardController {
+@RequestMapping("/dashboard/403")
+public class UnauthorizedController {
 
     @GetMapping
     public String index(final Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
@@ -22,10 +22,9 @@ public class DashboardController {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        model.addAttribute("page", PageEnum.DASHBOARD);
+        model.addAttribute("page", PageEnum.UNAUTHORIZED);
         model.addAttribute("displayName", customUserDetails.getDisplayName());
         model.addAttribute("roles", authorities);
-
-        return "dashboard/index";
+        return "dashboard/403";
     }
 }

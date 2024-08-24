@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.type.NumericBooleanConverter;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -22,6 +24,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "users_sequence")
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -29,6 +32,9 @@ public class UserEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private Boolean active = Boolean.TRUE;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

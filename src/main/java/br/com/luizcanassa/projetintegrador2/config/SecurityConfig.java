@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -23,6 +24,7 @@ public class SecurityConfig {
                                 "/resources/**", "/static/**",
                                 "/login"
                         ).permitAll()
+                        .requestMatchers("/dashboard/users/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
@@ -34,6 +36,8 @@ public class SecurityConfig {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                         .logoutSuccessUrl("/login?logout")
                 )
+                .exceptionHandling(handle -> handle
+                        .accessDeniedPage("/dashboard/403"))
                 .addFilterAfter(new LoginFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

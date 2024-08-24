@@ -1,5 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.controllers;
 
+import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,7 @@ public class LoginController {
 
     @GetMapping
     public String login(final Model model) {
-        model.addAttribute("title", "Lanchonete - Login");
+        model.addAttribute("page", PageEnum.LOGIN);
         return "login/index";
     }
 }
