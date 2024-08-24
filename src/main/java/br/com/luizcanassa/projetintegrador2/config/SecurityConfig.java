@@ -1,5 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.config;
 
+import br.com.luizcanassa.projetintegrador2.filters.DashboardFilter;
 import br.com.luizcanassa.projetintegrador2.filters.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,6 +40,7 @@ public class SecurityConfig {
                 .exceptionHandling(handle -> handle
                         .accessDeniedPage("/dashboard/403"))
                 .addFilterAfter(new LoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new DashboardFilter(), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
