@@ -2,10 +2,7 @@ package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
-import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusRootUserException;
-import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusUserException;
-import br.com.luizcanassa.projetintegrador2.exception.RoleNotFoundException;
-import br.com.luizcanassa.projetintegrador2.exception.UserNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.service.RoleService;
 import br.com.luizcanassa.projetintegrador2.service.UserService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
@@ -22,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     private final UserService userService;
+
     private final RoleService roleService;
 
     public UsersController(final UserService userService, final RoleService roleService) {
@@ -73,6 +71,27 @@ public class UsersController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return "redirect:/dashboard/users/create?createUserError=unknown-error";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") final Long id) {
+        try {
+            userService.deleteUser(id);
+
+            return "redirect:/dashboard/users?deleteUserSuccess=true";
+        } catch (UserNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?deleteUserError=not-found";
+        } catch (DeleteUserException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?deleteUserError=same-user";
+        } catch (DeleteRootUserException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?deleteUserError=root-user";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?deleteUserError=unknown-error";
         }
     }
 

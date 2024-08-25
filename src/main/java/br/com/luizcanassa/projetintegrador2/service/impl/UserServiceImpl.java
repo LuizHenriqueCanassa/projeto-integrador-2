@@ -5,10 +5,7 @@ import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
-import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusRootUserException;
-import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusUserException;
-import br.com.luizcanassa.projetintegrador2.exception.RoleNotFoundException;
-import br.com.luizcanassa.projetintegrador2.exception.UserNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.mapper.UserMapper;
 import br.com.luizcanassa.projetintegrador2.repository.RoleRepository;
 import br.com.luizcanassa.projetintegrador2.repository.UserRepository;
@@ -70,7 +67,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void changeUserStatus(final Long id)
-            throws UsernameNotFoundException, ChangeStatusUserException, ChangeStatusRootUserException
+            throws UserNotFoundException, ChangeStatusUserException, ChangeStatusRootUserException
     {
         final var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
 
@@ -98,6 +95,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         );
 
         userRepository.saveAndFlush(userToCreate);
+    }
+
+    @Override
+    public void deleteUser(Long id) throws UserNotFoundException, DeleteRootUserException {
+        final var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
+
+        if (isRootUser(user)) {
+            throw new DeleteRootUserException("Não é possível deleter um usuário ROOT!");
+        }
+
+        if (user.getUsername().equals(AuthenticationUtils.getUsername())) {
+            throw new DeleteUserException("Não é possível deletar o seu proprio usuário");
+        }
+
+        userRepository.delete(user);
     }
 
     private static boolean isRootUser(final UserEntity user) {
