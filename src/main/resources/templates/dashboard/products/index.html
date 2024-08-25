@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="~{/template/header :: site_header}"></head>
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="~{/template/side-navbar :: side_navbar}"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <nav th:replace="~{/template/navbar :: navbar}"></nav>
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+              <h6 class="text-white text-capitalize ps-3 mb-0 mt-1">Produtos</h6>
+              <div class="justify-content-end ms-md-auto pe-4">
+                <a th:href="@{/dashboard/products/create}">
+                  <button class="btn bg-gradient-success mb-0 toast-btn" type="button">Cadastrar</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div th:replace="~{/template/scripts :: footer_scripts}"></div>
+</body>
+</html>

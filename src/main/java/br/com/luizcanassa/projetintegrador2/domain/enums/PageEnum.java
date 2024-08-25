@@ -10,6 +10,9 @@ public enum PageEnum {
     USERS("users", "Usuários"),
     CREATE_USERS("users", "Cadastrar Usuário"),
     EDIT_USERS("users", "Editar Usuário"),
+    CATEGORIES("categories", "Categorias"),
+    CREATE_CATEGORIES("categories", "Cadastrar Categoria"),
+    EDIT_CATEGORIES("categories", "Editar Categoria"),
     PRODUCTS("products", "Produtos"),
     UNAUTHORIZED("403", "Não Autorizado"),
     NOT_FOUND("404", "Não Encontrado"),;

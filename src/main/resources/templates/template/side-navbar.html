@@ -21,6 +21,25 @@
       </li>
       <div th:if="${#lists.contains(roles, 'ROLE_ADMIN') || #lists.contains(roles, 'ROLE_ROOT')}">
         <li class="nav-item mt-3">
+          <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Administrativo</h6>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" th:href="@{/dashboard/categories}" th:classappend="${page.currentPage == 'categories'} ? 'active bg-gradient-primary' : ''">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">format_list_bulleted</i>
+            </div>
+            <span class="nav-link-text ms-1">Categorias</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" th:href="@{/dashboard/products}" th:classappend="${page.currentPage == 'products'} ? 'active bg-gradient-primary' : ''">
+            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+              <i class="material-icons opacity-10">storefront</i>
+            </div>
+            <span class="nav-link-text ms-1">Produtos</span>
+          </a>
+        </li>
+        <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Sistema</h6>
         </li>
         <li class="nav-item">
