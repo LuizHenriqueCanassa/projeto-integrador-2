@@ -8,6 +8,7 @@ public enum PageEnum {
     DASHBOARD("dashboard", "Página Inicial"),
     LOGIN("login", "Login"),
     USERS("users", "Usuários"),
+    CREATE_USERS("users", "Cadastrar Usuário"),
     UNAUTHORIZED("403", "Não Autorizado");
 
     private final String currentPage;

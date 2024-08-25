@@ -13,7 +13,7 @@
                 <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
                   <h6 class="text-white text-capitalize ps-3 mb-0 mt-1">Usuários do sistema</h6>
                   <div class="justify-content-end ms-md-auto pe-4">
-                    <a href="">
+                    <a th:href="@{/dashboard/users/create}">
                       <button class="btn bg-gradient-success mb-0 toast-btn" type="button">Cadastrar</button>
                     </a>
                   </div>
@@ -70,6 +70,24 @@
       </div>
     </main>
     <div class="position-fixed top-1 end-1 z-index-2">
+      <!-- Inicio da area de alertas de criacao de usuario -->
+      <div th:if="${param.createUserSuccess != null}">
+        <div th:if="${param.createUserSuccess[0] == 'true'}">
+          <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createUserSuccess" aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="material-icons text-success me-2">campaign</i>
+              <span class="me-auto text-gradient text-success font-weight-bold">Criação de usuário!</span>
+              <small class="text-body"></small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Usuário criado com sucesso.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fim da area de alertas de criacao de usuario -->
       <!-- Inicio da area de alertas de alteração de status do usuario -->
       <div th:if="${param.changeStatusSuccess != null}">
         <div th:if="${param.changeStatusSuccess[0] == 'true'}">

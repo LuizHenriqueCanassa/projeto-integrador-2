@@ -16,6 +16,7 @@ ALTER TABLE USERS ADD CONSTRAINT UK_USERNAME_USERS UNIQUE (USERNAME);
 CREATE TABLE ROLES (
                        ID INTEGER NOT NULL,
                        NAME VARCHAR(100) NOT NULL,
+                       DESCRIPTION VARCHAR(100) NOT NULL,
                        CREATED_AT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                        UPDATED_AT TIMESTAMP
 );
@@ -58,19 +59,19 @@ VALUES
     (nextval('SQ_USERS_ID'), 'Luiz Henrique', 'luiz-canassa', '$2a$12$..RtCNlwCrNSqlggBd1TbuIDjDHHUHmEuOSWimY8Muqh5OWJNfQwW');
 
 INSERT INTO ROLES
-(ID, NAME)
+(ID, NAME, DESCRIPTION)
 VALUES
-    (nextval('SQ_ROLES_ID'), 'ROLE_ROOT');
+    (nextval('SQ_ROLES_ID'), 'ROLE_ROOT', 'Root');
 
 INSERT INTO ROLES
-(ID, NAME)
+(ID, NAME, DESCRIPTION)
 VALUES
-    (nextval('SQ_ROLES_ID'), 'ROLE_ADMIN');
+    (nextval('SQ_ROLES_ID'), 'ROLE_ADMIN', 'Administrador');
 
 INSERT INTO ROLES
-(ID, NAME)
+(ID, NAME, DESCRIPTION)
 VALUES
-    (nextval('SQ_ROLES_ID'), 'ROLE_USER');
+    (nextval('SQ_ROLES_ID'), 'ROLE_USER', 'Usuário');
 
 
 INSERT INTO USERS_ROLES

@@ -1,13 +1,18 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
+import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
+import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusRootUserException;
 import br.com.luizcanassa.projetintegrador2.exception.ChangeStatusUserException;
+import br.com.luizcanassa.projetintegrador2.exception.RoleNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.UserNotFoundException;
-import br.com.luizcanassa.projetintegrador2.mapper.UserDTOMapper;
+import br.com.luizcanassa.projetintegrador2.mapper.UserMapper;
+import br.com.luizcanassa.projetintegrador2.repository.RoleRepository;
 import br.com.luizcanassa.projetintegrador2.repository.UserRepository;
+import br.com.luizcanassa.projetintegrador2.service.RoleService;
 import br.com.luizcanassa.projetintegrador2.service.UserService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,10 +20,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +32,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(final UserRepository userRepository) {
+    private final RoleService roleService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    public UserServiceImpl(final UserRepository userRepository, final RoleService roleService, final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -47,7 +59,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<UserDTO> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(UserDTOMapper::userToUserDTO)
+                .map(UserMapper::userToUserDTO)
                 .filter(userDTO -> {
                     if (AuthenticationUtils.isRoot()) {
                         return true;
@@ -73,6 +85,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setActive(!user.getActive());
 
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void createUser(final UserCreateDTO userCreateDTO) throws RoleNotFoundException {
+        final var userToCreate = UserMapper.userCreateDTOToUserEntity(userCreateDTO, passwordEncoder.encode(userCreateDTO.getPassword()));
+        userToCreate.setRoles(
+                Collections.singleton(
+                        roleService.findById(userCreateDTO.getRoleId())
+                )
+        );
+
+        userRepository.saveAndFlush(userToCreate);
     }
 
     private static boolean isRootUser(final UserEntity user) {

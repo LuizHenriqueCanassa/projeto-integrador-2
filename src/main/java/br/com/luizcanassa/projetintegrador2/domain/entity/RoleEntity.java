@@ -24,6 +24,9 @@ public class RoleEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String description;
+
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
