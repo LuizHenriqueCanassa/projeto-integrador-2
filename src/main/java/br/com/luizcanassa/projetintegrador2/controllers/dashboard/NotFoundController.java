@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/dashboard/403")
-public class UnauthorizedController {
+@RequestMapping("/dashboard/404")
+public class NotFoundController {
 
     @GetMapping
-    public String index(final Model model) {
+    public String notFound(final Model model) {
 
-        model.addAttribute("page", PageEnum.UNAUTHORIZED);
+        model.addAttribute("page", PageEnum.NOT_FOUND);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
 
-        return "dashboard/403";
+        return "dashboard/404";
     }
 }
