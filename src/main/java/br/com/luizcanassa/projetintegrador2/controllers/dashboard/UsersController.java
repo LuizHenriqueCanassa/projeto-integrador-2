@@ -1,6 +1,8 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.service.RoleService;
@@ -12,6 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Controller
@@ -50,7 +56,7 @@ public class UsersController {
     }
 
     @PostMapping("/create")
-    public String sendCreateUser(@ModelAttribute(value = "userCreate") @Valid final UserCreateDTO userCreate, final BindingResult bindingResult, final Model model) {
+    public String createUserAction(@ModelAttribute(value = "userCreate") @Valid final UserCreateDTO userCreate, final BindingResult bindingResult, final Model model) {
 
         model.addAttribute("page", PageEnum.CREATE_USERS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
@@ -71,6 +77,67 @@ public class UsersController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return "redirect:/dashboard/users/create?createUserError=unknown-error";
+        }
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable("id") final Long id, final Model model) {
+        try {
+
+            model.addAttribute("page", PageEnum.EDIT_USERS);
+            model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+            model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+            model.addAttribute("roleToCreate", roleService.findAll());
+            model.addAttribute("userToEdit", userService.findByIdToEdit(id));
+
+            return "dashboard/users/edit";
+
+        } catch (UserNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=user-not-found";
+        } catch (EditRootUserException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=user-root";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=unknown-error";
+        }
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editUserAction(
+            @ModelAttribute(value = "userToEdit") @Valid final UserEditDTO userToEdit,
+            final BindingResult bindingResult,
+            final Model model
+    ) {
+
+        model.addAttribute("page", PageEnum.EDIT_USERS);
+        model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+        model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+        model.addAttribute("roleToCreate", roleService.findAll());
+
+        if  (bindingResult.hasErrors()) {
+            return "/dashboard/users/edit";
+        }
+
+        try {
+
+            final var userEdited = userService.editUser(userToEdit);
+
+            if (Objects.equals(userEdited.getId(), AuthenticationUtils.getId())) {
+                return "redirect:/logout";
+            }
+
+            return "redirect:/dashboard/users?updateUserSuccess=true";
+        }  catch (UserNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=user-not-found";
+        } catch (EditRootUserException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=user-root";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/users?updateUserError=unknown-error";
         }
     }
 

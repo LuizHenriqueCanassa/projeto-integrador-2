@@ -51,7 +51,7 @@
                         </td>
                         <td class="align-middle text-center w-20">
                           <div th:if="${!user.getIsRoot()}">
-                            <a href="#">
+                            <a th:href="@{/dashboard/users/edit/{id}(id=${user.getId()})}">
                               <button class="btn bg-gradient-info mb-0 toast-btn" type="button">Editar</button>
                             </a>
                             <button class="btn bg-gradient-success mb-0 toast-btn" type="button" th:if="${!user.getActive()}" th:data-target="'activeOrInactiveUser' + ${user.getId()}">Ativar</button>
@@ -88,6 +88,72 @@
         </div>
       </div>
       <!-- Fim da area de alertas de criacao de usuario -->
+      <!-- Inicio da area de alertas de alteracao de usuario -->
+      <div th:if="${param.editUserSuccess != null}">
+        <div th:if="${param.editUserSuccess[0] == 'true'}">
+          <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="updateUserSuccess" aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="material-icons text-success me-2">campaign</i>
+              <span class="me-auto text-gradient text-success font-weight-bold">Criação de usuário!</span>
+              <small class="text-body"></small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Usuário criado com sucesso.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div th:if="${param.updateUserError != null}">
+        <div th:if="${param.updateUserError[0] == 'user-not-found'}">
+          <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="updateUserNotFoundError" aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="material-icons text-danger me-2">campaign</i>
+              <span class="me-auto text-gradient text-danger font-weight-bold">Edição de usuário!</span>
+              <small class="text-body"></small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Usuário não encontrado.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div th:if="${param.updateUserError != null}">
+        <div th:if="${param.updateUserError[0] == 'user-root'}">
+          <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="updateUserRootError" aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="material-icons text-danger me-2">campaign</i>
+              <span class="me-auto text-gradient text-danger font-weight-bold">Edição de usuário!</span>
+              <small class="text-body"></small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Não é possível modificar um usuário root.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div th:if="${param.updateUserError != null}">
+        <div th:if="${param.updateUserError[0] == 'unknown-error'}">
+          <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="updateUserUnknownError" aria-atomic="true">
+            <div class="toast-header border-0">
+              <i class="material-icons text-danger me-2">campaign</i>
+              <span class="me-auto text-gradient text-danger font-weight-bold">Edição de usuário!</span>
+              <small class="text-body"></small>
+              <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+            </div>
+            <hr class="horizontal dark m-0">
+            <div class="toast-body">
+              Houve um erro desconhecido ao tentar alterar o usuário.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fim da area de alertas de alteracao de usuario -->
       <!-- Inicio da area de alertas de alteração de status do usuario -->
       <div th:if="${param.changeStatusSuccess != null}">
         <div th:if="${param.changeStatusSuccess[0] == 'true'}">

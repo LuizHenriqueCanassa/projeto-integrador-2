@@ -2,6 +2,7 @@ package br.com.luizcanassa.projetintegrador2.mapper;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import lombok.experimental.UtilityClass;
@@ -20,6 +21,17 @@ public final class UserMapper {
                  isUserRoot(user.getRoles()),
                  user.getCreatedAt()
          );
+    }
+
+    public static UserEditDTO userToUserEditDTO (final UserEntity user) {
+        final var userEditDTO = new UserEditDTO();
+
+        userEditDTO.setId(user.getId());
+        userEditDTO.setName(user.getName());
+        userEditDTO.setUsername(user.getUsername());
+        userEditDTO.setRoleId(user.getRoles().stream().findFirst().get().getId());
+
+        return userEditDTO;
     }
 
     public static UserEntity userCreateDTOToUserEntity(final UserCreateDTO userCreateDTO, final String passwordEncoded) {

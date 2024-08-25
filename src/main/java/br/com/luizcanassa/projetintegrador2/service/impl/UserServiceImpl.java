@@ -3,11 +3,10 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
-import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
+import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.mapper.UserMapper;
-import br.com.luizcanassa.projetintegrador2.repository.RoleRepository;
 import br.com.luizcanassa.projetintegrador2.repository.UserRepository;
 import br.com.luizcanassa.projetintegrador2.service.RoleService;
 import br.com.luizcanassa.projetintegrador2.service.UserService;
@@ -49,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .map(roleEntity -> new SimpleGrantedAuthority(roleEntity.getName()))
                 .collect(Collectors.toSet());
 
-        return new CustomUserDetails(user.getName(), user.getUsername(), user.getPassword(), authorities, user.getActive());
+        return new CustomUserDetails(user.getName(), user.getUsername(), user.getPassword(), authorities, user.getId(), user.getActive());
     }
 
     @Override
@@ -62,7 +61,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                         return true;
                     } else return AuthenticationUtils.isRoot() || !userDTO.getIsRoot();
                 })
+                .sorted(Comparator.comparing(UserDTO::getId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserEditDTO findByIdToEdit(final Long id) throws UserNotFoundException, EditRootUserException {
+        final var user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
+
+        if (isRootUser(user)) {
+            throw new EditRootUserException("Não é possível editar um usuário ROOT");
+        }
+
+        return UserMapper.userToUserEditDTO(user);
     }
 
     @Override
@@ -95,6 +106,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         );
 
         userRepository.saveAndFlush(userToCreate);
+    }
+
+    @Override
+    public UserEntity editUser(final UserEditDTO userEditDTO) throws UserNotFoundException, EditRootUserException {
+        final var user = userRepository.findById(userEditDTO.getId()).orElseThrow(() -> new UserNotFoundException("Usuário não encontrado!"));
+
+        if (isRootUser(user)) {
+            throw new EditRootUserException("Não é possível editar um usuário ROOT");
+        }
+
+        user.setUsername(userEditDTO.getUsername());
+        user.setName(userEditDTO.getName());
+
+        if (!userEditDTO.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userEditDTO.getPassword()));
+        }
+
+        user.setRoles(
+                Collections.singleton(
+                        roleService.findById(userEditDTO.getRoleId())
+                )
+        );
+
+        return userRepository.saveAndFlush(user);
     }
 
     @Override

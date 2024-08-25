@@ -27,6 +27,10 @@ public final class AuthenticationUtils {
         return getUserAuthorities().contains("ROLE_ROOT");
     }
 
+    public static Long getId() {
+        return authentication().getId();
+    }
+
     private CustomUserDetails authentication() {
         return (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
