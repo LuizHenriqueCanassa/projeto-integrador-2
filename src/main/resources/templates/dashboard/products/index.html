@@ -168,6 +168,56 @@
     </div>
   </div>
   <!-- Fim da area de alertas de deleção da produto -->
+  <!-- Inicio da area de alertas de alteração de status do produto -->
+  <div th:if="${param.changeStatusProductSuccess != null}">
+    <div th:if="${param.changeStatusProductSuccess[0] == 'true'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="changeStatusProductSuccess" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-success me-2">campaign</i>
+          <span class="me-auto text-gradient text-success font-weight-bold">Sucesso ao alterar o status do produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Status do produto alterado com sucesso.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.changeStatusProductError != null}">
+    <div th:if="${param.changeStatusProductError[0] == 'not-found'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="notFoundProductError" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Erro ao alterar o status do produto</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Produto não encontrado.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.changeStatusProductError != null}">
+    <div th:if="${param.changeStatusProductError[0] == 'unknown-error'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="productUnknownError" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Erro ao alterar o status do produto</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Houve um erro desconhecido ao alterar o status do produto.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim da area de alertas de alteração de status do produto -->
   <div th:each="product : ${products}">
     <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" th:id="'excludeProduct' + ${product.getId()}" aria-atomic="true">
       <div class="toast-header border-0">

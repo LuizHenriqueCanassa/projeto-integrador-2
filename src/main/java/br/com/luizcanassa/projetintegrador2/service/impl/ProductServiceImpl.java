@@ -46,6 +46,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void changeStatus(final Long id) throws ProductNotFoundException {
+        final var product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Produto não encontrado!"));
+
+        product.setActive(!product.getActive());
+
+        productRepository.saveAndFlush(product);
+    }
+
+    @Override
     public void delete(final Long id) throws ProductNotFoundException {
         final var productToDelete = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Produto não encontrado!"));
 

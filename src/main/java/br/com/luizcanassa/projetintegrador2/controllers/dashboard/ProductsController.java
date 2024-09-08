@@ -80,6 +80,21 @@ public class ProductsController {
         }
     }
 
+    @GetMapping("/change-status/{id}")
+    public String changeProductStatus(@PathVariable("id") final Long id) {
+        try {
+            productService.changeStatus(id);
+
+            return "redirect:/dashboard/products?changeStatusProductSuccess=true";
+        } catch (ProductNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/products?changeStatusProductError=not-found";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/products?changeStatusProductError=unknown-error";
+        }
+    }
+
     @GetMapping("/delete/{id}")
     public String deleteProduct(@PathVariable final Long id) {
         try {

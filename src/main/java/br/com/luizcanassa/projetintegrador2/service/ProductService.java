@@ -13,5 +13,7 @@ public interface ProductService {
 
     void create(ProductCreateDTO productCreateDTO) throws CategoryNotFoundException;
 
+    void changeStatus(Long id) throws ProductNotFoundException;
+
     void delete(Long id) throws ProductNotFoundException;
 }
