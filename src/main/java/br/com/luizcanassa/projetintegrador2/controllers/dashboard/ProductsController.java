@@ -1,6 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
@@ -40,7 +41,7 @@ public class ProductsController {
     }
 
     @GetMapping("/create")
-    public String create(
+    public String createProduct(
             @ModelAttribute(value = "productCreate") ProductCreateDTO productCreateDTO,
             final Model model
     ) {
@@ -54,7 +55,7 @@ public class ProductsController {
     }
 
     @PostMapping("/create")
-    public String createAction(
+    public String createProductAction(
             @ModelAttribute(value = "productCreate") @Valid final ProductCreateDTO productCreateDTO,
             final BindingResult bindingResult,
             final Model model
@@ -78,6 +79,39 @@ public class ProductsController {
             log.error(e.getMessage());
             return "redirect:/dashboard/products/index?createProductError=unknown-error";
         }
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProduct(
+            @PathVariable final Long id,
+            @ModelAttribute(value = "productEdit") final ProductEditDTO productEditDTO,
+            final Model model
+    ) {
+        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+        model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+        model.addAttribute("categories", categoryService.findAllActiveCategories());
+        model.addAttribute("productToEdit", productService.findByIdToEdit(id));
+
+        return "dashboard/products/edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editProductAction(
+            @PathVariable final Long id,
+            @ModelAttribute(value = "productEdit") @Valid final ProductEditDTO productEditDTO,
+            final Model model,
+            final BindingResult bindingResult
+    ) {
+        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+        model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+
+        productEditDTO.setId(id);
+
+        productService.edit(productEditDTO);
+
+        return "redirect:/dashboard/products?productSuccessEdit=true";
     }
 
     @GetMapping("/change-status/{id}")
