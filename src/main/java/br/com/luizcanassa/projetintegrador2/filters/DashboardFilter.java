@@ -6,6 +6,9 @@ import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
@@ -20,7 +23,7 @@ public class DashboardFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if (request.getRequestURI().equals("/")) {
+        if (request.getRequestURI().equals("/") && isAuthenticated()) {
             String encodedRedirectURL = ((HttpServletResponse) servletResponse).encodeRedirectURL(
                     request.getContextPath() + "/dashboard");
 
@@ -29,5 +32,16 @@ public class DashboardFilter extends GenericFilterBean {
         }
 
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isAuthenticated() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || AnonymousAuthenticationToken.class.
+                isAssignableFrom(authentication.getClass())) {
+            return false;
+        }
+
+        return authentication.isAuthenticated();
     }
 }
