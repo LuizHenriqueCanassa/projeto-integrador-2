@@ -68,7 +68,7 @@
   </div>
 </main>
 <div class="position-fixed top-1 end-1 z-index-2">
-  <!-- Inicio da area de alertas de criacao de usuario -->
+  <!-- Inicio da area de alertas de criacao de produto -->
   <div th:if="${param.productSuccessCreate != null}">
     <div th:if="${param.productSuccessCreate[0] == 'true'}">
       <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createProductSuccess" aria-atomic="true">
@@ -117,7 +117,93 @@
       </div>
     </div>
   </div>
-  <!-- Fim da area de alertas de criacao de usuario -->
+  <!-- Fim da area de alertas de criacao de produto -->
+  <!-- Inicio da area de alertas de deleção da produto -->
+  <div th:if="${param.productDeleteSuccess != null}">
+    <div th:if="${param.productDeleteSuccess[0] == 'true'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="deleteProductSuccess" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-success me-2">campaign</i>
+          <span class="me-auto text-gradient text-success font-weight-bold">Deleção de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Produto deletado com sucesso.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.productDeleteError != null}">
+    <div th:if="${param.productDeleteError[0] == 'not-found'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="deleteProductNotFoundError" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Deleção de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Produto não encontrado.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.productDeleteError != null}">
+    <div th:if="${param.productDeleteError[0] == 'unknown-error'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="deleteProductUnknownError" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Deleção de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Houve um erro desconhecido ao tentar deletar o produto.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim da area de alertas de deleção da produto -->
+  <div th:each="product : ${products}">
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" th:id="'excludeProduct' + ${product.getId()}" aria-atomic="true">
+      <div class="toast-header border-0">
+        <i class="material-icons text-danger me-2">campaign</i>
+        <span class="me-auto text-gradient text-danger font-weight-bold">Deletar Produto</span>
+        <small class="text-body"></small>
+        <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+      </div>
+      <hr class="horizontal dark m-0">
+      <div class="toast-body">
+        Deseja deletar o produto <span th:text="${product.getName()}"></span>?
+        <br>
+        <a th:href="@{/dashboard/products/delete/{id}(id=${product.getId()})}">
+          <button class="btn bg-gradient-danger mb-0 toast-btn" type="button">Sim</button>
+        </a>
+        <button class="btn bg-gradient-warning mb-0 toast-btn" type="button" data-bs-dismiss="toast">Não</button>
+      </div>
+    </div>
+    <div class="toast fade hide p-2 mt-2 bg-white" role="alert" aria-live="assertive" th:id="'activeOrInactiveProduct' + ${product.getId()}" aria-atomic="true">
+      <div class="toast-header border-0">
+        <i class="material-icons text-warning me-2">campaign</i>
+        <span class="me-auto text-gradient text-warning font-weight-bold" th:text="${product.getActive() ? 'Inativar Produto' : 'Ativar Produto'}"></span>
+        <small class="text-body"></small>
+        <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+      </div>
+      <hr class="horizontal dark m-0">
+      <div class="toast-body">
+        Deseja <span th:text="${product.getActive() ? 'Inativar' : 'Ativar'}"></span> o produto <span th:text="${product.getName()}"></span>?
+        <br>
+        <a th:href="@{/dashboard/products/change-status/{id}(id=${product.getId()})}">
+          <button class="btn bg-gradient-danger mb-0 toast-btn" type="button">Sim</button>
+        </a>
+        <button class="btn bg-gradient-warning mb-0 toast-btn" type="button" data-bs-dismiss="toast">Não</button>
+      </div>
+    </div>
+  </div>
 </div>
 <div th:replace="~{/template/scripts :: footer_scripts}"></div>
 </body>

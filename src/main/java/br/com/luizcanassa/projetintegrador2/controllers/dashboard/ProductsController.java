@@ -3,6 +3,7 @@ package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.service.CategoryService;
 import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
@@ -11,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -79,6 +77,21 @@ public class ProductsController {
         } catch (Exception e) {
             log.error(e.getMessage());
             return "redirect:/dashboard/products/index?createProductError=unknown-error";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable final Long id) {
+        try {
+            productService.delete(id);
+
+            return "redirect:/dashboard/products?productDeleteSuccess=true";
+        } catch (ProductNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/products?productDeleteError=product-not-found";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/products?productDeleteError=unknown-error";
         }
     }
 }

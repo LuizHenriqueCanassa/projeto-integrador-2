@@ -4,11 +4,13 @@ import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.ProductEntity;
 import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.ProductMapper;
 import br.com.luizcanassa.projetintegrador2.repository.CategoryRepository;
 import br.com.luizcanassa.projetintegrador2.repository.ProductRepository;
 import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,5 +43,12 @@ public class ProductServiceImpl implements ProductService {
         );
 
         productRepository.save(productToCreate);
+    }
+
+    @Override
+    public void delete(final Long id) throws ProductNotFoundException {
+        final var productToDelete = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException("Produto não encontrado!"));
+
+        productRepository.delete(productToDelete);
     }
 }
