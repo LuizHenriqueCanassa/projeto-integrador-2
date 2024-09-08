@@ -1,8 +1,8 @@
 package br.com.luizcanassa.projetintegrador2.mapper;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import org.mapstruct.Mapper;

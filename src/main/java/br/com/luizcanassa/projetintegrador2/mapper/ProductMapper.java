@@ -1,6 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.mapper;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.ProductDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.ProductEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,4 +15,6 @@ public interface ProductMapper {
     ProductDTO toProductDTO(ProductEntity product);
 
     List<ProductDTO> toProductDTOList(List<ProductEntity> productEntities);
+
+    ProductEntity toProductEntity(ProductCreateDTO productDTO);
 }

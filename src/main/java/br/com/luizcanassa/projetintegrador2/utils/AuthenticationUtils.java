@@ -1,6 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.utils;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.CustomUserDetails;
 import lombok.experimental.UtilityClass;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

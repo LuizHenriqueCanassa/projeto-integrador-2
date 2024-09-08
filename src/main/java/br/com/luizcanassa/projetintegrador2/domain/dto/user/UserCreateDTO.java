@@ -1,4 +1,4 @@
-package br.com.luizcanassa.projetintegrador2.domain.dto;
+package br.com.luizcanassa.projetintegrador2.domain.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -6,10 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class UserEditDTO {
-
-    @NotNull(message = "O campo ID é obrigátorio")
-    private Long id;
+public class UserCreateDTO {
 
     @NotNull(message = "O campo nome é obrigatório")
     @NotBlank(message = "O campo nome não pode ser vazio")
@@ -21,6 +18,9 @@ public class UserEditDTO {
     @Size(max = 30, min = 5, message = "O campo nome de usuário deve ter entre 5 e 30 caracteres")
     private String username;
 
+    @NotNull(message = "O campo senha é obrigatório")
+    @NotBlank(message = "O campo senha de usuário não pode ser vazio")
+    @Size(max = 30, min = 6, message = "O campo senha deve ter entre 6 e 30 caracteres")
     private String password;
 
     @NotNull(message = "O perfil é obrigatório")

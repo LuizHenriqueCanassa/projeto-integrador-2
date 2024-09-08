@@ -1,9 +1,9 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.CustomUserDetails;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
 import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.mapper.UserMapper;

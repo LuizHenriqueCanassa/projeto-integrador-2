@@ -1,8 +1,8 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.CategoryEntity;
 import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.DeleteCategoryWithProductsException;
@@ -32,6 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(CategoryEntity::getId))
+                .map(categoryMapper::toCategoryDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CategoryDTO> findAllActiveCategories() {
+        return categoryRepository.findAllByActiveIsTrue()
+                .stream()
                 .map(categoryMapper::toCategoryDTO)
                 .collect(Collectors.toList());
     }

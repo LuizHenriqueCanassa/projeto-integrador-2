@@ -1,6 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.mapper;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.RoleDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.role.RoleDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import org.mapstruct.Mapper;
 

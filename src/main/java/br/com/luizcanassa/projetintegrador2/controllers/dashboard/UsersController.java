@@ -1,8 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.user.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.*;
 import br.com.luizcanassa.projetintegrador2.service.RoleService;
@@ -15,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Comparator;
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j

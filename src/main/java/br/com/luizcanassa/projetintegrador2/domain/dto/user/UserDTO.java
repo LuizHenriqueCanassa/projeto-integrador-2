@@ -1,4 +1,4 @@
-package br.com.luizcanassa.projetintegrador2.domain.dto;
+package br.com.luizcanassa.projetintegrador2.domain.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

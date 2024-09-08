@@ -1,8 +1,8 @@
 package br.com.luizcanassa.projetintegrador2.mapper;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.CategoryEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

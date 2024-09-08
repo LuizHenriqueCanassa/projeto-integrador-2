@@ -1,13 +1,12 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.RoleDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.role.RoleDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.exception.RoleNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.RoleMapper;
 import br.com.luizcanassa.projetintegrador2.repository.RoleRepository;
 import br.com.luizcanassa.projetintegrador2.service.RoleService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;

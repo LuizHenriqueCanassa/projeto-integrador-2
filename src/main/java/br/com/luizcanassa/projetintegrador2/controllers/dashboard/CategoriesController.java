@@ -1,7 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryCreateDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.CategoryEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryCreateDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.DeleteCategoryWithProductsException;

@@ -1,4 +1,4 @@
-package br.com.luizcanassa.projetintegrador2.domain.dto;
+package br.com.luizcanassa.projetintegrador2.domain.dto.category;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
