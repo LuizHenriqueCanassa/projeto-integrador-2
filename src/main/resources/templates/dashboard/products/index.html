@@ -67,6 +67,58 @@
     </div>
   </div>
 </main>
+<div class="position-fixed top-1 end-1 z-index-2">
+  <!-- Inicio da area de alertas de criacao de usuario -->
+  <div th:if="${param.productSuccessCreate != null}">
+    <div th:if="${param.productSuccessCreate[0] == 'true'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createProductSuccess" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-success me-2">campaign</i>
+          <span class="me-auto text-gradient text-success font-weight-bold">Criação de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Produto criado com sucesso.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.createProductError != null}">
+    <div th:if="${param.createProductError[0] == 'category-not-found'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createProductErrorCategory" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Criação de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Categoria não encontrada!
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.createProductError != null}">
+    <div th:if="${param.createProductError[0] == 'unknown-error'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createProductErrorUnknown" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Criação de produto!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Erro desconhecido ao criar o produto!
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim da area de alertas de criacao de usuario -->
+</div>
 <div th:replace="~{/template/scripts :: footer_scripts}"></div>
 </body>
 </html>

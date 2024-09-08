@@ -34,7 +34,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void create(final ProductCreateDTO productCreateDTO) throws CategoryNotFoundException {
-        System.out.println(productCreateDTO.getPrice());
         final var productToCreate = productMapper.toProductEntity(productCreateDTO);
         productToCreate.setCategory(
                 categoryRepository.findById(productCreateDTO.getCategoryId())
