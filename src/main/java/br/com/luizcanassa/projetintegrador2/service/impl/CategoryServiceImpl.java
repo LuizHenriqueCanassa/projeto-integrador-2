@@ -20,8 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryServiceImpl(final CategoryRepository categoryRepository) {
+    private final CategoryMapper categoryMapper;
+
+    public CategoryServiceImpl(final CategoryRepository categoryRepository, final CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll()
                 .stream()
                 .sorted(Comparator.comparing(CategoryEntity::getId))
-                .map(CategoryMapper::toCategoryDTO)
+                .map(categoryMapper::toCategoryDTO)
                 .collect(Collectors.toList());
     }
 
@@ -38,12 +41,12 @@ public class CategoryServiceImpl implements CategoryService {
         final var category = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Categoria não encontrada!"));
 
-        return CategoryMapper.toCategoryEditDTO(category);
+        return categoryMapper.toCategoryEditDTO(category);
     }
 
     @Override
     public void createCategory(final CategoryCreateDTO categoryCreateDTO) {
-        categoryRepository.saveAndFlush(CategoryMapper.toCategoryEntity(categoryCreateDTO));
+        categoryRepository.saveAndFlush(categoryMapper.toCategoryEntity(categoryCreateDTO));
     }
 
     @Override

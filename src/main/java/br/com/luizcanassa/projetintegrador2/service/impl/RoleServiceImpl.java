@@ -17,13 +17,16 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
-    public RoleServiceImpl(final RoleRepository roleRepository) {
+    private final RoleMapper roleMapper;
+
+    public RoleServiceImpl(final RoleRepository roleRepository, final RoleMapper roleMapper) {
         this.roleRepository = roleRepository;
+        this.roleMapper = roleMapper;
     }
 
     @Override
     public List<RoleDTO> findAll() {
-        return roleRepository.findAllRoles().stream().map(RoleMapper::toDto).collect(Collectors.toList());
+        return roleRepository.findAllRoles().stream().map(roleMapper::toDto).collect(Collectors.toList());
     }
 
     @Override

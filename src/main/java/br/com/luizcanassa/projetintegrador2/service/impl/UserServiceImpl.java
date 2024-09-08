@@ -32,10 +32,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(final UserRepository userRepository, final RoleService roleService, final PasswordEncoder passwordEncoder) {
+    private final UserMapper userMapper;
+
+    public UserServiceImpl(
+            final UserRepository userRepository,
+            final RoleService roleService,
+            final PasswordEncoder passwordEncoder,
+            final UserMapper userMapper
+    ) {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -55,7 +63,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<UserDTO> findAll() {
         return userRepository.findAll()
                 .stream()
-                .map(UserMapper::userToUserDTO)
+                .map(userMapper::toUserDTO)
                 .filter(userDTO -> {
                     if (AuthenticationUtils.isRoot()) {
                         return true;
@@ -73,7 +81,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new EditRootUserException("Não é possível editar um usuário ROOT");
         }
 
-        return UserMapper.userToUserEditDTO(user);
+        return userMapper.toUserEditDTO(user);
     }
 
     @Override
@@ -98,7 +106,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void createUser(final UserCreateDTO userCreateDTO) throws RoleNotFoundException {
-        final var userToCreate = UserMapper.userCreateDTOToUserEntity(userCreateDTO, passwordEncoder.encode(userCreateDTO.getPassword()));
+
+        userCreateDTO.setPassword(passwordEncoder.encode(userCreateDTO.getPassword()));
+
+        final var userToCreate = userMapper.createDTOToUserEntity(userCreateDTO);
         userToCreate.setRoles(
                 Collections.singleton(
                         roleService.findById(userCreateDTO.getRoleId())
