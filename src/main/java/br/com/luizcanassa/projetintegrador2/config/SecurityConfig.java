@@ -1,22 +1,16 @@
 package br.com.luizcanassa.projetintegrador2.config;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.CustomUserDetails;
 import br.com.luizcanassa.projetintegrador2.filters.DashboardFilter;
 import br.com.luizcanassa.projetintegrador2.filters.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-import java.security.Principal;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +27,8 @@ public class SecurityConfig {
                                 "/css/**",
                                 "/img/**",
                                 "/json/**",
-                                "/login"
+                                "/login",
+                                "/"
                         ).permitAll()
                         .requestMatchers("/dashboard/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ROOT")
                         .anyRequest().authenticated()
