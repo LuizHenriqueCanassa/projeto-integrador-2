@@ -5,21 +5,21 @@ import br.com.luizcanassa.projetintegrador2.domain.dto.UserDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.UserEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.RoleEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.UserEntity;
-import lombok.experimental.UtilityClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.Set;
 
-@Mapper(componentModel = "spring", uses = {RoleMapper.class})
+@Mapper(componentModel = "spring", uses = {RoleMapper.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
 
-    @Mapping(target = "isRoot", source = "roles", qualifiedByName = "isRoot")
-    UserDTO toUserDTO(UserEntity userEntity);
+    @Mapping(target = "isRoot", source = "user.roles", qualifiedByName = "isRoot")
+    UserDTO toUserDTO(UserEntity user);
 
-    @Mapping(target = "roleId", source = "roles", qualifiedByName = "roleId")
-    UserEditDTO toUserEditDTO(UserEntity userEntity);
+    @Mapping(target = "roleId", source = "user.roles", qualifiedByName = "roleId")
+    UserEditDTO toUserEditDTO(UserEntity user);
 
     UserEntity createDTOToUserEntity(UserCreateDTO userCreateDTO);
 
