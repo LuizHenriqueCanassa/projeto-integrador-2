@@ -46,7 +46,7 @@ public class ProductsController {
             final Model model
     ) {
 
-        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("page", PageEnum.CREATE_PRODUCTS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
         model.addAttribute("categories", categoryService.findAllActiveCategories());
@@ -60,7 +60,7 @@ public class ProductsController {
             final BindingResult bindingResult,
             final Model model
     ) {
-        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("page", PageEnum.CREATE_PRODUCTS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
 
@@ -87,7 +87,7 @@ public class ProductsController {
             @ModelAttribute(value = "productEdit") final ProductEditDTO productEditDTO,
             final Model model
     ) {
-        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("page", PageEnum.EDIT_PRODUCTS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
         model.addAttribute("categories", categoryService.findAllActiveCategories());
@@ -103,7 +103,7 @@ public class ProductsController {
             final Model model,
             final BindingResult bindingResult
     ) {
-        model.addAttribute("page", PageEnum.PRODUCTS);
+        model.addAttribute("page", PageEnum.EDIT_PRODUCTS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
 

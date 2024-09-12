@@ -14,8 +14,10 @@ public enum PageEnum {
     CREATE_CATEGORIES("categories", "Cadastrar Categoria"),
     EDIT_CATEGORIES("categories", "Editar Categoria"),
     PRODUCTS("products", "Produtos"),
+    CREATE_PRODUCTS("products", "Cadastrar Produto"),
+    EDIT_PRODUCTS("products", "Editar Produto"),
     UNAUTHORIZED("403", "Não Autorizado"),
-    NOT_FOUND("404", "Não Encontrado"),;
+    NOT_FOUND("404", "Não Encontrado");
 
     private final String currentPage;
 
