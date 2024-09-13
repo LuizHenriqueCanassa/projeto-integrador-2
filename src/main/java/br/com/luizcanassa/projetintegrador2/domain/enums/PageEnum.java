@@ -16,6 +16,9 @@ public enum PageEnum {
     PRODUCTS("products", "Produtos"),
     CREATE_PRODUCTS("products", "Cadastrar Produto"),
     EDIT_PRODUCTS("products", "Editar Produto"),
+    CUSTOMERS("customers", "Clientes"),
+    CREATE_CUSTOMERS("customers", "Cadastrar Cliente"),
+    EDIT_CUSTOMERS("customers", "Editar Cliente"),
     UNAUTHORIZED("403", "Não Autorizado"),
     NOT_FOUND("404", "Não Encontrado");
 
