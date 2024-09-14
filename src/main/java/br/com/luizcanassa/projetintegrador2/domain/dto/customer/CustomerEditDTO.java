@@ -6,7 +6,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CustomerCreateDTO {
+public class CustomerEditDTO {
+
+    private Long id;
 
     @NotNull
     @NotBlank(message = "O campo Nome é obrigatório")
@@ -21,10 +23,11 @@ public class CustomerCreateDTO {
     private String mobilePhone;
 
     @Valid
-    private AddressDTO address;
+    private AddressEditDTO address;
 
     @Data
-    public static class AddressDTO {
+    public static class AddressEditDTO {
+        private Long id;
 
         @NotNull
         @NotBlank(message = "O campo Endereço é obrigatório")

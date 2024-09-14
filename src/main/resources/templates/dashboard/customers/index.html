@@ -112,6 +112,72 @@
     </div>
   </div>
   <!-- Fim da area de alertas de criacao de cliente -->
+  <!-- Inicio da area de alertas de edicao de cliente -->
+  <div th:if="${param.customerSuccessEdit != null}">
+    <div th:if="${param.customerSuccessEdit[0] == 'true'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="editCustomerSuccess" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-success me-2">campaign</i>
+          <span class="me-auto text-gradient text-success font-weight-bold">Edição de cliente!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Cliente editado com sucesso.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.customerEditError != null}">
+    <div th:if="${param.customerEditError[0] == 'customer-not-found'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="editCustomerErrorNotFound" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Edição de cliente!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Cliente não encontrado.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.customerEditError != null}">
+    <div th:if="${param.customerEditError[0] == 'unknown-error'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="editCustomerErrorUnknown" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Edição de cliente!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Erro desconhecido ao editar o cliente.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.customerEditError != null}">
+    <div th:if="${param.customerEditError[0] == 'customer-already-exist'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="editCustomerErrorAlreadyExist" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Edição de cliente!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Já existe um cliente cadastrado com esse documento.
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim da area de alertas de edicao de cliente -->
 </div>
 <div th:replace="~{/template/scripts :: footer_scripts}"></div>
 </body>

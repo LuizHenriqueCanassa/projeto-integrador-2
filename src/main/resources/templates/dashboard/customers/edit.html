@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/template/header :: site_header}"></head>
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="~{/template/side-navbar :: side_navbar}"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+    <nav th:replace="~{/template/navbar :: navbar}"></nav>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card my-4">
+                    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+                            <h6 class="text-white text-capitalize ps-3 mb-0 mt-1">Editar Cliente</h6>
+                        </div>
+                    </div>
+                    <div class="card-body px-4 pb-2">
+                        <form th:action="@{/dashboard/customers/edit/{id}(id=${customer.getId()})}" method="post" th:object="${customerToEdit}">
+                            <div class="alert alert-danger alert-dismissible text-white" role="alert" th:each="e : ${#fields.allErrors()}">
+                                <span class="text-sm" th:text="${e}"></span>
+                                <button type="button" class="btn-close text-lg py-3 opacity-10" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="row">
+                                <input type="hidden" name="id" th:value="${customer.getId()}">
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="name" class="form-label">Nome</label>
+                                        <input type="text" name="name" id="name" class="form-control" field="*{name}" th:value="${customer.getName()}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="document" class="form-label">Documento</label>
+                                        <input type="text" name="document" id="document" class="form-control" field="*{document}" th:value="${customer.getDocument()}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="mobilePhone" class="form-label">Telefone</label>
+                                        <input type="text" name="mobilePhone" id="mobilePhone" class="form-control" field="*{mobilePhone}" th:value="${customer.getMobilePhone()}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <input type="hidden" name="address.id" th:value="${customer.getAddress().getId()}">
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="streetName" class="form-label">Endereço</label>
+                                        <input type="text" name="address.streetName" id="streetName" class="form-control" field="*{streetName}" th:value="${customer.getAddress().getStreetName()}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="number" class="form-label">Número</label>
+                                        <input type="text" name="address.number" id="number" class="form-control" field="*{number}" th:value="${customer.getAddress().getNumber()}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="city" class="form-label">Cidade</label>
+                                        <input type="text" name="address.city" id="city" class="form-control" field="*{city}" th:value="${customer.getAddress().getCity()}">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="input-group input-group-outline focused is-focused">
+                                        <label for="district" class="form-label">Bairro</label>
+                                        <input type="text" name="address.district" id="district" class="form-control" field="*{district}" th:value="${customer.getAddress().getDistrict()}">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn bg-gradient-success my-4" type="submit">Editar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{/template/scripts :: footer_scripts}"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#mobilePhone").mask("(00) 00000-0000", {reverse: false});
+        $("#document").mask("000.000.000-00", {reverse: false});
+    })
+</script>
+</body>
+</html>

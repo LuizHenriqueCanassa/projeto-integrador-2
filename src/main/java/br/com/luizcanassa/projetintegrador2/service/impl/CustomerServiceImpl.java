@@ -2,8 +2,10 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.CustomerEntity;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerAlreadyExistException;
+import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.AddressMapper;
 import br.com.luizcanassa.projetintegrador2.mapper.CustomerMapper;
 import br.com.luizcanassa.projetintegrador2.repository.AddressRepository;
@@ -48,9 +50,35 @@ public class CustomerServiceImpl implements CustomerService {
 
         var customerCreate = customerRepository.save(customerMapper.toCustomerEntity(customerCreateDTO));
 
-        var addressToCreate = addressMapper.toAddressEntity(customerCreateDTO);
+        var addressToCreate = addressMapper.toAddressEntity(customerCreateDTO.getAddress());
         addressToCreate.setCustomer(customerCreate);
 
         addressRepository.save(addressToCreate);
+    }
+
+    @Override
+    public CustomerEditDTO findById(final Long id) {
+        final var customerEntity = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException("Cliente não encontrado."));
+
+        var customerToEdit = customerMapper.toCustomerEditDTO(customerEntity);
+
+        customerToEdit.setAddress(addressMapper.toAddressEditDTO(customerEntity.getAddresses().get(0)));
+
+        return customerToEdit;
+    }
+
+    @Override
+    public void update(final CustomerEditDTO customerEditDTO) {
+        final var customerToEdit = customerRepository.findById(customerEditDTO.getId())
+                .orElseThrow(() -> new CustomerNotFoundException("Cliente não encontrado."));
+
+        if (!customerToEdit.getDocument().equals(StringUtils.removeDocumentMask(customerEditDTO.getDocument()))) {
+            if (customerRepository.existsByDocument(StringUtils.removeDocumentMask(customerEditDTO.getDocument()))) {
+                throw new CustomerAlreadyExistException("Já existe outro cliente cadastrado com esse documento.");
+            }
+        }
+
+        customerRepository.save(customerMapper.toCustomerEntity(customerEditDTO, customerToEdit));
+        addressRepository.save(addressMapper.toAddressEntity(customerEditDTO.getAddress(), customerToEdit.getAddresses().get(0)));
     }
 }

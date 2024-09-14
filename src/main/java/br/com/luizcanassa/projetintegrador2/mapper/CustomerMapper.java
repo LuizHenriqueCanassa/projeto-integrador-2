@@ -2,6 +2,7 @@ package br.com.luizcanassa.projetintegrador2.mapper;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerCreateDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.customer.CustomerEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.CustomerEntity;
 import br.com.luizcanassa.projetintegrador2.utils.StringUtils;
 import org.mapstruct.Mapper;
@@ -12,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
 import java.text.ParseException;
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {AddressMapper.class})
 public interface CustomerMapper {
 
     @Mapping(source = "name", target = "name")
@@ -27,6 +28,16 @@ public interface CustomerMapper {
     @Mapping(source = "mobilePhone", target = "mobilePhone", qualifiedByName = "removeMaskMobilePhone")
     @Mapping(target = "addresses", ignore = true)
     CustomerEntity toCustomerEntity(CustomerCreateDTO customerCreateDTO);
+
+    CustomerEditDTO toCustomerEditDTO(CustomerEntity customerEntity);
+
+    default CustomerEntity toCustomerEntity(CustomerEditDTO customerEditDTO, CustomerEntity customerEntity) {
+        customerEntity.setName(customerEditDTO.getName());
+        customerEntity.setDocument(StringUtils.removeDocumentMask(customerEditDTO.getDocument()));
+        customerEntity.setMobilePhone(StringUtils.removeMobilePhoneMask(customerEditDTO.getMobilePhone()));
+
+        return customerEntity;
+    }
 
     @Named("removeMaskDocument")
     default String removeMaskDocument(String document) {

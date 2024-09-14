@@ -31,7 +31,7 @@ public class CustomerEntity {
     @Column(nullable = false, length = 11)
     private String mobilePhone;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AddressEntity> addresses;
 
     @CreationTimestamp
