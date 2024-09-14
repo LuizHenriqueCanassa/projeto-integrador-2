@@ -49,7 +49,6 @@
                       <a th:href="@{/dashboard/customers/edit/{id}(id=${customer.getId()})}">
                         <button class="btn bg-gradient-info mb-0 toast-btn" type="button">Editar</button>
                       </a>
-                      <button class="btn bg-gradient-danger mb-0 toast-btn" type="button" th:data-target="'excludeCustomer' + ${customer.getId()}">Deletar</button>
                     </td>
                   </tr>
                 </tbody>
