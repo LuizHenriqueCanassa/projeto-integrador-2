@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "orders_local")
 @PrimaryKeyJoinColumn(name = "id_order")
-public class OrderLocalEntity {
+public class OrderLocalEntity extends OrderEntity {
 
     @Id
     @SequenceGenerator(name = "orders_local_sequence", sequenceName = "SQ_ORDERS_LOCAL_ID", allocationSize = 1)
