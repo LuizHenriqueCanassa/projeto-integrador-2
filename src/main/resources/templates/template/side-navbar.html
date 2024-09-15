@@ -27,6 +27,25 @@
           <span class="nav-link-text ms-1">Clientes</span>
         </a>
       </li>
+      <li class="nav-item mt-3">
+        <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Pedidos</h6>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" th:href="@{/dashboard/orders/delivery}" th:classappend="${page.currentPage == 'orders-delivery'} ? 'active bg-gradient-primary' : ''">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">two_wheeler</i>
+          </div>
+          <span class="nav-link-text ms-1">Delivery</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-white" th:href="@{/dashboard/orders/local}" th:classappend="${page.currentPage == 'orders-local'} ? 'active bg-gradient-primary' : ''">
+          <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+            <i class="material-icons opacity-10">store</i>
+          </div>
+          <span class="nav-link-text ms-1">Estabelecimento</span>
+        </a>
+      </li>
       <div th:if="${#lists.contains(roles, 'ROLE_ADMIN') || #lists.contains(roles, 'ROLE_ROOT')}">
         <li class="nav-item mt-3">
           <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Administrativo</h6>

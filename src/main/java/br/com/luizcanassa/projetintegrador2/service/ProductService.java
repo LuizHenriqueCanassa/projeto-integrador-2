@@ -7,10 +7,13 @@ import br.com.luizcanassa.projetintegrador2.exception.CategoryNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ProductService {
 
     List<ProductDTO> findAll();
+
+    List<ProductDTO> findAllActiveProducts();
 
     ProductEditDTO findByIdToEdit(Long id) throws ProductNotFoundException;
 

@@ -26,7 +26,7 @@ public abstract class OrderEntity {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private OrdersStatusEnum status;
+    private OrdersStatusEnum status = OrdersStatusEnum.AWAITING;
 
     @Column(nullable = false)
     private Boolean paid = Boolean.FALSE;

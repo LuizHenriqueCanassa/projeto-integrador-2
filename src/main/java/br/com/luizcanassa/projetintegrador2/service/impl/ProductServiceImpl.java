@@ -14,9 +14,11 @@ import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public  class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
 
@@ -33,6 +35,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDTO> findAll() {
         return productMapper.toProductDTOList(productRepository.findAll());
+    }
+
+    @Override
+    public List<ProductDTO> findAllActiveProducts() {
+        return productMapper
+                .toProductDTOList(productRepository.findAllByActiveIsTrue());
     }
 
     @Override
