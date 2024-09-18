@@ -24,6 +24,58 @@
         </div>
     </div>
 </main>
+<div class="position-fixed top-1 end-1 z-index-2">
+    <!-- Inicio da area de alertas de criacao de pedido -->
+    <div th:if="${param.createOrderLocalSuccess != null}">
+        <div th:if="${param.createOrderLocalSuccess[0] == 'true'}">
+            <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderSuccess" aria-atomic="true">
+                <div class="toast-header border-0">
+                    <i class="material-icons text-success me-2">campaign</i>
+                    <span class="me-auto text-gradient text-success font-weight-bold">Criação de pedido!</span>
+                    <small class="text-body"></small>
+                    <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+                </div>
+                <hr class="horizontal dark m-0">
+                <div class="toast-body">
+                    Pedido criado com sucesso.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.createOrderLocalError != null}">
+        <div th:if="${param.createOrderLocalError[0] == 'product-not-found'}">
+            <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderErrorProductNotFOund" aria-atomic="true">
+                <div class="toast-header border-0">
+                    <i class="material-icons text-danger me-2">campaign</i>
+                    <span class="me-auto text-gradient text-danger font-weight-bold">Criação de pedido!</span>
+                    <small class="text-body"></small>
+                    <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+                </div>
+                <hr class="horizontal dark m-0">
+                <div class="toast-body">
+                    Algum dos produtos da lista não foram encontrados!
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${param.createOrderLocalError != null}">
+        <div th:if="${param.createOrderLocalError[0] == 'unknown-error'}">
+            <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderErrorUnknown" aria-atomic="true">
+                <div class="toast-header border-0">
+                    <i class="material-icons text-danger me-2">campaign</i>
+                    <span class="me-auto text-gradient text-danger font-weight-bold">Criação de pedido!</span>
+                    <small class="text-body"></small>
+                    <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+                </div>
+                <hr class="horizontal dark m-0">
+                <div class="toast-body">
+                    Erro desconhecido ao criar o pedido!
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim da area de alertas de criacao de produto -->
+</div>
 <div th:replace="~{/template/scripts :: footer_scripts}"></div>
 </body>
 </html>

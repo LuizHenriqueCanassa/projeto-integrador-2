@@ -2,8 +2,9 @@ package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
+import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.service.CategoryService;
-import br.com.luizcanassa.projetintegrador2.service.OrderService;
+import br.com.luizcanassa.projetintegrador2.service.OrderLocalService;
 import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
 import jakarta.validation.Valid;
@@ -27,12 +28,12 @@ public class OrdersLocalController {
 
     private final CategoryService categoryService;
 
-    private final OrderService orderService;
+    private final OrderLocalService orderLocalService;
 
-    public OrdersLocalController(final ProductService productService, final CategoryService categoryService, final OrderService orderService) {
+    public OrdersLocalController(final ProductService productService, final CategoryService categoryService, final OrderLocalService orderLocalService) {
         this.productService = productService;
         this.categoryService = categoryService;
-        this.orderService = orderService;
+        this.orderLocalService = orderLocalService;
     }
 
     @GetMapping
@@ -78,9 +79,12 @@ public class OrdersLocalController {
         }
 
         try {
-            orderService.create(createOrderLocalDTO);
+            orderLocalService.create(createOrderLocalDTO);
 
             return "redirect:/dashboard/orders/local?createOrderLocalSuccess=true";
+        } catch (ProductNotFoundException e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/orders/local?createOrderLocalError=product-not-found";
         } catch (Exception e) {
             log.error(e.getMessage());
             return "redirect:/dashboard/orders/local?createOrderLocalError=unknown-error";

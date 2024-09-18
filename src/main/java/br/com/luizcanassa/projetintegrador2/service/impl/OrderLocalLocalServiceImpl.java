@@ -5,17 +5,18 @@ import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLo
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderLocalEntity;
+import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.repository.OrderLocalRepository;
 import br.com.luizcanassa.projetintegrador2.repository.OrderRepository;
 import br.com.luizcanassa.projetintegrador2.repository.ProductRepository;
-import br.com.luizcanassa.projetintegrador2.service.OrderService;
+import br.com.luizcanassa.projetintegrador2.service.OrderLocalService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
-public class OrderLocalServiceImpl implements OrderService {
+public class OrderLocalLocalServiceImpl implements OrderLocalService {
 
     private final OrderRepository orderRepository;
 
@@ -23,16 +24,14 @@ public class OrderLocalServiceImpl implements OrderService {
 
     private final ProductRepository productRepository;
 
-    public OrderLocalServiceImpl(final OrderRepository orderRepository, final OrderLocalRepository orderLocalRepository, final ProductRepository productRepository) {
+    public OrderLocalLocalServiceImpl(final OrderRepository orderRepository, final OrderLocalRepository orderLocalRepository, final ProductRepository productRepository) {
         this.orderRepository = orderRepository;
         this.orderLocalRepository = orderLocalRepository;
         this.productRepository = productRepository;
     }
 
     @Override
-    public void create(final CreateOrderDTO createOrderDTO) {
-        final CreateOrderLocalDTO createOrderLocalDTO = (CreateOrderLocalDTO) createOrderDTO;
-
+    public void create(final CreateOrderLocalDTO createOrderLocalDTO) throws ProductNotFoundException {
         final var order = new OrderEntity();
 
         order.setDetails(createOrderLocalDTO.getDetails());
@@ -57,11 +56,11 @@ public class OrderLocalServiceImpl implements OrderService {
         });
     }
 
-    private void fillOrderItems(final CreateOrderLocalDTO createOrderLocalDTO, final OrderEntity savedOrder) {
+    private void fillOrderItems(final CreateOrderLocalDTO createOrderLocalDTO, final OrderEntity savedOrder) throws ProductNotFoundException {
         var orderItems = new ArrayList<OrderItemEntity>();
 
         createOrderLocalDTO.getOrderItems().forEach(item -> {
-            final var product = productRepository.findById(item.getProductId()).orElseThrow();
+            final var product = productRepository.findById(item.getProductId()).orElseThrow(() -> new ProductNotFoundException("Produto não encontrado"));
 
             var orderItem = new OrderItemEntity();
             orderItem.setQuantity(item.getQuantity());
