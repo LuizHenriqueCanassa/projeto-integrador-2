@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders_delivery")
-@PrimaryKeyJoinColumn(name = "id_order")
-public class OrderDeliveryEntity extends OrderEntity {
+public class OrderDeliveryEntity {
 
     @Id
     @SequenceGenerator(name = "orders_delivery_sequence", sequenceName = "SQ_ORDERS_DELIVERY_ID", allocationSize = 1)

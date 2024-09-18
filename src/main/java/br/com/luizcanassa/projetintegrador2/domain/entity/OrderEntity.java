@@ -4,7 +4,10 @@ import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class OrderEntity {
+public class OrderEntity {
 
     @Id
     @SequenceGenerator(name = "orders_sequence", sequenceName = "SQ_ORDERS_ID", allocationSize = 1)
@@ -22,14 +25,17 @@ public abstract class OrderEntity {
     private Long id;
 
     @Column(nullable = false, scale = 10, precision = 2)
-    private BigDecimal amount;
+    private BigDecimal totalAmount = BigDecimal.ZERO;
 
     @Column(nullable = false)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     @Enumerated(EnumType.STRING)
     private OrdersStatusEnum status = OrdersStatusEnum.AWAITING;
 
     @Column(nullable = false)
     private Boolean paid = Boolean.FALSE;
+
+    private String details;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

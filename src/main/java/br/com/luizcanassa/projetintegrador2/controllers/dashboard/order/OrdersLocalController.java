@@ -1,13 +1,13 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.category.CategoryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.product.ProductDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.service.CategoryService;
+import br.com.luizcanassa.projetintegrador2.service.OrderService;
 import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Controller
 @RequestMapping("/dashboard/orders/local")
 public class OrdersLocalController {
@@ -28,9 +27,12 @@ public class OrdersLocalController {
 
     private final CategoryService categoryService;
 
-    public OrdersLocalController(final ProductService productService, final CategoryService categoryService) {
+    private final OrderService orderService;
+
+    public OrdersLocalController(final ProductService productService, final CategoryService categoryService, final OrderService orderService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -75,8 +77,13 @@ public class OrdersLocalController {
             return "dashboard/orders/local/create";
         }
 
-        System.out.println(createOrderLocalDTO);
+        try {
+            orderService.create(createOrderLocalDTO);
 
-        return "";
+            return "redirect:/dashboard/orders/local?createOrderLocalSuccess=true";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return "redirect:/dashboard/orders/local?createOrderLocalError=unknown-error";
+        }
     }
 }

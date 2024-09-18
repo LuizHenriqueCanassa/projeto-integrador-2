@@ -1,9 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.domain.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,8 +12,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders_local")
-@PrimaryKeyJoinColumn(name = "id_order")
-public class OrderLocalEntity extends OrderEntity {
+@ToString(callSuper = true)
+public class OrderLocalEntity {
 
     @Id
     @SequenceGenerator(name = "orders_local_sequence", sequenceName = "SQ_ORDERS_LOCAL_ID", allocationSize = 1)
@@ -24,6 +22,10 @@ public class OrderLocalEntity extends OrderEntity {
 
     @Column(nullable = false)
     private Integer cardControl;
+
+    @ManyToOne
+    @JoinColumn(name = "id_order")
+    private OrderEntity order;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

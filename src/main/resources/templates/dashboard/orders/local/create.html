@@ -36,6 +36,14 @@
                             </div>
                             <div class="row mt-3 mb-2">
                                 <div class="col">
+                                    <div class="input-group-text input-group-outline">
+                                        <label for="details" class="form-label">Detalhes</label>
+                                        <textarea name="details" id="details" class="form-control" rows="10" field="*{details}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-3 mb-2">
+                                <div class="col">
                                     <div class="mt-2 mb-2 d-flex justify-content-between">
                                         <h6>Itens do pedido:</h6>
                                         <button class="btn bg-gradient-success" type="button" id="add-item">
@@ -74,8 +82,6 @@
                 productsOptions = productsOptions + '<option value="' + item.id + '">' + item.name + '</option>\n';
             })
 
-
-
             $("#order-itens-area").append(
                 $("<div>")
                     .addClass("row mt-3")
@@ -103,9 +109,10 @@
                                     .append(
                                         $("<input>")
                                             .addClass("form-control")
-                                            .attr("type", "text")
+                                            .attr("type", "number")
                                             .attr("name", "orderItems[" + itensQuantity + "].quantity")
                                             .attr("id", "quantity" + itensQuantity)
+                                            .attr("required", "true")
                                     )
                             )
                     )
