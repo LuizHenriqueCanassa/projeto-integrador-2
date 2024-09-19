@@ -41,6 +41,7 @@ public class OrdersLocalController {
         model.addAttribute("page", PageEnum.ORDERS_LOCAL);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+        model.addAttribute("orders", orderLocalService.findAll());
 
         return "dashboard/orders/local/index";
     }
