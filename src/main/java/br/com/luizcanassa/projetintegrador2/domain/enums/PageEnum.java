@@ -22,6 +22,8 @@ public enum PageEnum {
     ORDERS_LOCAL("orders-local", "Pedidos no estabelecimento"),
     ORDERS_LOCAL_CREATE("orders-local", "Criar pedido no estabelecimento"),
     ORDERS_LOCAL_DETAILS("orders-local", "Detalhes do pedido"),
+    ORDERS_DELIVERY("orders-delivery", "Pedidos para delivery"),
+    ORDERS_DELIVERY_CREATE("orders-delivery", "Criar pedido para delivery"),
     UNAUTHORIZED("403", "Não Autorizado"),
     NOT_FOUND("404", "Não Encontrado");
 

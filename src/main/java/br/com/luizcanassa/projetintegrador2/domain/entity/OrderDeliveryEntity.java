@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders_delivery")
+@ToString(callSuper = true)
 public class OrderDeliveryEntity {
 
     @Id
@@ -24,6 +26,10 @@ public class OrderDeliveryEntity {
     @ManyToOne
     @JoinColumn(name = "id_customer")
     private CustomerEntity customer;
+
+    @ManyToOne
+    @JoinColumn(name = "id_order")
+    private OrderEntity order;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

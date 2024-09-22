@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/template/header :: site_header}"></head>
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="~{/template/side-navbar :: side_navbar}"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <nav th:replace="~{/template/navbar :: navbar}"></nav>
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+              <h6 class="text-white ps-3 mb-0 mt-1">Pedidos para delivery</h6>
+              <div class="justify-content-end ms-md-auto pe-4">
+                <a th:href="@{/dashboard/orders/delivery/create}">
+                  <button class="btn bg-gradient-success mb-0 toast-btn" type="button">Cadastrar</button>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Documento Cliente</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Preço</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                  <td class="ps-4">
+                    <p class="text-xs font-weight-bold" th:text="${order.getId()}"></p>
+                  </td>
+                  <td class="align-middle text-center">
+                    <p class="text-secondary text-xs font-weight-bold" th:text="${order.getCardControl()}"></p>
+                  </td>
+                  <td class="align-middle text-center">
+                    <p class="text-secondary text-xs font-weight-bold" th:text="'R$ ' + ${order.getTotalAmount()}"></p>
+                  </td>
+                  <td class="align-middle text-center">
+                    <p class="text-secondary text-xs font-weight-bold" th:text="${order.getStatus()}"></p>
+                  </td>
+                  <td class="align-middle text-center w-20">
+                    <a th:href="@{/dashboard/orders/delivery/details/{id}(id=${order.getId()})}">
+                      <button class="btn bg-gradient-info mb-0 toast-btn" type="button">Visualizar</button>
+                    </a>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="position-fixed top-1 end-1 z-index-2">
+  <!-- Inicio da area de alertas de criacao de pedido -->
+  <div th:if="${param.createOrderLocalSuccess != null}">
+    <div th:if="${param.createOrderLocalSuccess[0] == 'true'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderSuccess" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-success me-2">campaign</i>
+          <span class="me-auto text-gradient text-success font-weight-bold">Criação de pedido!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Pedido criado com sucesso.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.createOrderLocalError != null}">
+    <div th:if="${param.createOrderLocalError[0] == 'product-not-found'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderErrorProductNotFOund" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Criação de pedido!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Algum dos produtos da lista não foram encontrados!
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:if="${param.createOrderLocalError != null}">
+    <div th:if="${param.createOrderLocalError[0] == 'unknown-error'}">
+      <div class="toast fade show p-2 mt-2 bg-white" role="alert" aria-live="assertive" id="createOrderErrorUnknown" aria-atomic="true">
+        <div class="toast-header border-0">
+          <i class="material-icons text-danger me-2">campaign</i>
+          <span class="me-auto text-gradient text-danger font-weight-bold">Criação de pedido!</span>
+          <small class="text-body"></small>
+          <i class="fas fa-times text-md ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>
+        </div>
+        <hr class="horizontal dark m-0">
+        <div class="toast-body">
+          Erro desconhecido ao criar o pedido!
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim da area de alertas de criacao de produto -->
+</div>
+<div th:replace="~{/template/scripts :: footer_scripts}"></div>
+</body>
+</html>

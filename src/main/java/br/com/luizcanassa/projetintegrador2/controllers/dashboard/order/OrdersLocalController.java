@@ -49,16 +49,10 @@ public class OrdersLocalController {
             @ModelAttribute(name = "orderLocalCreate") final CreateOrderLocalDTO createOrderLocalDTO,
             final Model model
     ) {
-        final var products = productService.findAllActiveProducts();
-        final var categories = categoryService.findAllActiveCategories()
-                .stream()
-                .filter(categoryDTO -> products.stream().anyMatch(productDTO -> categoryDTO.getName().equals(productDTO.getCategory()))).collect(Collectors.toList());
-
         model.addAttribute("page", PageEnum.ORDERS_LOCAL_CREATE);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
-        model.addAttribute("products", products);
-        model.addAttribute("categories", categories);
+        model.addAttribute("products", productService.findAllActiveProducts());
 
         return "dashboard/orders/local/create";
     }
