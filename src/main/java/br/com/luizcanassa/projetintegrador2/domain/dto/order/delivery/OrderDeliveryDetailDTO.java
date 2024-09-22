@@ -19,6 +19,8 @@ public class OrderDeliveryDetailDTO {
 
     private String status;
 
+    private Boolean paid;
+
     private BigDecimal totalAmount;
 
 }

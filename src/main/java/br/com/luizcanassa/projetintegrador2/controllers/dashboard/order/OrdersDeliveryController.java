@@ -1,6 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
@@ -92,12 +93,16 @@ public class OrdersDeliveryController {
     }
 
     @PostMapping("/details/{id}/edit-status")
-    public String editStatusAction(@PathVariable("id") final Long id, Model model, final String status) {
+    public String editStatusAction(
+            @PathVariable("id") final Long id,
+            final Model model,
+            @ModelAttribute final OrderDeliveryEditDTO orderDeliveryEditDTO
+            ) {
         model.addAttribute("page", PageEnum.ORDERS_DELIVERY_DETAILS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
 
-        orderDeliveryService.editStatus(id, status);
+        orderDeliveryService.editStatus(id, orderDeliveryEditDTO);
 
         return "redirect:/dashboard/orders/delivery";
     }

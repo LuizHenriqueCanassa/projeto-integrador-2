@@ -3,6 +3,7 @@ package br.com.luizcanassa.projetintegrador2.service;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDetailDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryEditDTO;
 
 import java.util.List;
 
@@ -14,5 +15,5 @@ public interface OrderDeliveryService {
 
     void create(CreateOrderDeliveryDTO createOrderDeliveryDTO);
 
-    void editStatus(Long id, String status);
+    void editStatus(Long id, OrderDeliveryEditDTO orderDeliveryEditDTO);
 }

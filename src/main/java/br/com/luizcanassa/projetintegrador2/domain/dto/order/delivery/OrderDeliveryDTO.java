@@ -13,5 +13,7 @@ public class OrderDeliveryDTO {
 
     private BigDecimal totalAmount;
 
+    private Boolean paid;
+
     private String status;
 }

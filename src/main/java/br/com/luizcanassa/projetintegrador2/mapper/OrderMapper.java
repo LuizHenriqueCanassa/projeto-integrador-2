@@ -26,6 +26,7 @@ public interface OrderMapper {
     @Mapping(target = "document", source = "orderDelivery.customer.document", qualifiedByName = "toDocumentMasked")
     @Mapping(target = "totalAmount", source = "orderDelivery.order", qualifiedByName = "toTotalAmount")
     @Mapping(target = "status", source = "orderDelivery.order", qualifiedByName = "toStatus")
+    @Mapping(target = "paid", source = "orderDelivery.order.paid")
     OrderDeliveryDTO toOrderDeliveryDTO(OrderDeliveryEntity orderDelivery);
 
     @Mapping(target = "totalAmount", source = "orderLocal.order.totalAmount")
@@ -41,6 +42,7 @@ public interface OrderMapper {
     @Mapping(target = "orderItems", source = "orderDelivery.order", qualifiedByName = "toOrderItems")
     @Mapping(target = "status", source = "orderDelivery.order.status", qualifiedByName = "toStatus")
     @Mapping(target = "document", source = "orderDelivery.customer.document", qualifiedByName = "toDocumentMasked")
+    @Mapping(target = "paid", source = "orderDelivery.order.paid")
     OrderDeliveryDetailDTO toDeliveryOrderDetailDTO(OrderDeliveryEntity orderDelivery);
 
     @Named("toTotalAmount")

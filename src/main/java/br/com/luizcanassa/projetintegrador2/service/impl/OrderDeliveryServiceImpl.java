@@ -3,6 +3,7 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDetailDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderDeliveryEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
@@ -89,10 +90,11 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
     }
 
     @Override
-    public void editStatus(final Long id, final String status) {
+    public void editStatus(final Long id, final OrderDeliveryEditDTO orderDeliveryEditDTO) {
         final var order = orderDeliveryRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado!")).getOrder();
 
-        order.setStatus(OrdersStatusEnum.valueOf(status));
+        order.setStatus(OrdersStatusEnum.valueOf(orderDeliveryEditDTO.getStatus()));
+        order.setPaid(orderDeliveryEditDTO.getPaid());
 
         orderRepository.save(order);
     }
