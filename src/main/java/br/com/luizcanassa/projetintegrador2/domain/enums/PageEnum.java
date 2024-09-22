@@ -21,6 +21,7 @@ public enum PageEnum {
     EDIT_CUSTOMERS("customers", "Editar Cliente"),
     ORDERS_LOCAL("orders-local", "Pedidos no estabelecimento"),
     ORDERS_LOCAL_CREATE("orders-local", "Criar pedido no estabelecimento"),
+    ORDERS_LOCAL_DETAILS("orders-local", "Detalhes do pedido"),
     UNAUTHORIZED("403", "Não Autorizado"),
     NOT_FOUND("404", "Não Encontrado");
 

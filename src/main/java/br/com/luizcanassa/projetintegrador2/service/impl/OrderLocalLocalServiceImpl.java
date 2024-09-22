@@ -3,9 +3,12 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDetailDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderLocalEntity;
+import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
+import br.com.luizcanassa.projetintegrador2.exception.OrderLocalNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.OrderMapper;
 import br.com.luizcanassa.projetintegrador2.repository.OrderLocalRepository;
@@ -60,6 +63,20 @@ public class OrderLocalLocalServiceImpl implements OrderLocalService {
 
         orderLocalRepository.save(orderLocalEntity);
         orderRepository.save(savedOrder);
+    }
+
+    @Override
+    public OrderLocalDetailDTO findById(final Long id) {
+        return orderMapper.toLocalOrderDetailDTO(orderLocalRepository.findById(id).orElseThrow(() -> new OrderLocalNotFoundException("Pedido não encontrado!")));
+    }
+
+    @Override
+    public void editStatus(final Long id, final String status) {
+        final var order = orderLocalRepository.findById(id).orElseThrow(() -> new OrderLocalNotFoundException("Pedido não encontrado!")).getOrder();
+
+        order.setStatus(OrdersStatusEnum.valueOf(status));
+
+        orderRepository.save(order);
     }
 
     private void fillOrderAmount(final OrderEntity orderEntity) {

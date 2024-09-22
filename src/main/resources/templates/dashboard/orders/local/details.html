@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/template/header :: site_header}"></head>
+<body class="g-sidenav-show  bg-gray-200">
+<aside th:replace="~{/template/side-navbar :: side_navbar}"></aside>
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+  <nav th:replace="~{/template/navbar :: navbar}"></nav>
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card my-4">
+          <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex">
+              <h6 class="text-white ps-3 mb-0 mt-1">Detalhes do pedido</h6>
+            </div>
+          </div>
+          <div class="card-body px-4 pb-2">
+            <form th:action="@{/dashboard/orders/local/details/{id}/edit-status(id=${orderDetails.getId()})}" method="post">
+              <div class="row">
+                <div class="col">
+                  <div class="input-group input-group-outline focused is-focused">
+                    <label for="cardControl" class="form-label">Número da Comanda</label>
+                    <input type="text" id="cardControl" class="form-control" th:value="${orderDetails.getCardControl()}" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <div class="input-group-text input-group-outline focused is-focused">
+                    <label for="details" class="form-label">Detalhes</label>
+                    <textarea id="details" class="form-control" rows="10" th:text="${orderDetails.getDetails()}" disabled></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <div class="input-group-text input-group-outline focused is-focused">
+                    <label for="order-items" class="form-label">Items</label>
+                    <textarea id="order-items" class="form-control" rows="10" th:text="${orderDetails.getOrderItems()}" disabled></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <div class="input-group input-group-outline focused is-focused">
+                    <label for="totalAmount" class="form-label">Valor Total</label>
+                    <input type="text" id="totalAmount" class="form-control" th:value="${orderDetails.getTotalAmount()}" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <div class="input-group input-group-outline focused is-focused">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-control">
+                      <option
+                              th:each="status : ${orderStatus}"
+                              th:text="${status.getName()}"
+                              th:value="${status}"
+                              th:selected="${orderDetails.getStatus() == status.toString()}"
+                      ></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <button  class="btn bg-gradient-warning my-4" type="submit">Editar status</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<div th:replace="~{/template/scripts :: footer_scripts}"></div>
+</body>
+</html>
