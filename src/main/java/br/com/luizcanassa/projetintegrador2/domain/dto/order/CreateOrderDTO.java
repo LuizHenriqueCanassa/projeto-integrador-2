@@ -1,4 +1,4 @@
-package br.com.luizcanassa.projetintegrador2.domain.dto.order.local;
+package br.com.luizcanassa.projetintegrador2.domain.dto.order;
 
 import lombok.Data;
 

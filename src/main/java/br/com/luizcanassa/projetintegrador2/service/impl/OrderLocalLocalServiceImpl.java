@@ -1,6 +1,5 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDetailDTO;

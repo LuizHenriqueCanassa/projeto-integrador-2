@@ -1,6 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.CreateOrderDeliveryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
@@ -38,7 +38,7 @@ public class OrdersDeliveryController {
         model.addAttribute("page", PageEnum.ORDERS_DELIVERY);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
-        model.addAttribute("orders", new ArrayList<>());
+        model.addAttribute("orders", orderDeliveryService.findAll());
 
         return "dashboard/orders/delivery/index";
     }

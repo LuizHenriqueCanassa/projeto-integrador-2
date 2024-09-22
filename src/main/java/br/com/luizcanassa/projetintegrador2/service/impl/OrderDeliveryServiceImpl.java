@@ -1,13 +1,13 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.CreateOrderDeliveryDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderDeliveryEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
-import br.com.luizcanassa.projetintegrador2.domain.entity.OrderLocalEntity;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
+import br.com.luizcanassa.projetintegrador2.mapper.OrderMapper;
 import br.com.luizcanassa.projetintegrador2.repository.CustomerRepository;
 import br.com.luizcanassa.projetintegrador2.repository.OrderDeliveryRepository;
 import br.com.luizcanassa.projetintegrador2.repository.OrderRepository;
@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderDeliveryServiceImpl implements OrderDeliveryService {
@@ -32,16 +34,25 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
 
     private final CustomerRepository customerRepository;
 
+    private final OrderMapper orderMapper;
+
     public OrderDeliveryServiceImpl(
             final OrderRepository orderRepository,
             final ProductRepository productRepository,
             final OrderDeliveryRepository orderDeliveryRepository,
-            final CustomerRepository customerRepository
+            final CustomerRepository customerRepository,
+            final OrderMapper orderMapper
     ) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.orderDeliveryRepository = orderDeliveryRepository;
         this.customerRepository = customerRepository;
+        this.orderMapper = orderMapper;
+    }
+
+    @Override
+    public List<OrderDeliveryDTO> findAll() {
+        return orderDeliveryRepository.findAll().stream().map(orderMapper::toOrderDeliveryDTO).collect(Collectors.toList());
     }
 
     @Override

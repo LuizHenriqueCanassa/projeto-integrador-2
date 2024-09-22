@@ -4,7 +4,6 @@ import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLo
 import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
-import br.com.luizcanassa.projetintegrador2.service.CategoryService;
 import br.com.luizcanassa.projetintegrador2.service.OrderLocalService;
 import br.com.luizcanassa.projetintegrador2.service.ProductService;
 import br.com.luizcanassa.projetintegrador2.utils.AuthenticationUtils;
@@ -15,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.stream.Collectors;
-
 @Slf4j
 @Controller
 @RequestMapping("/dashboard/orders/local")
@@ -24,13 +21,10 @@ public class OrdersLocalController {
 
     private final ProductService productService;
 
-    private final CategoryService categoryService;
-
     private final OrderLocalService orderLocalService;
 
-    public OrdersLocalController(final ProductService productService, final CategoryService categoryService, final OrderLocalService orderLocalService) {
+    public OrdersLocalController(final ProductService productService, final OrderLocalService orderLocalService) {
         this.productService = productService;
-        this.categoryService = categoryService;
         this.orderLocalService = orderLocalService;
     }
 

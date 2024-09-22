@@ -1,5 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.domain.dto.order.local;
 
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.CreateOrderDTO;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
