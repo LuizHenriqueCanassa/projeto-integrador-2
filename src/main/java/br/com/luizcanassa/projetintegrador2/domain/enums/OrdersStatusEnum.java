@@ -11,7 +11,6 @@ public enum OrdersStatusEnum {
     AWAITING("Aguardando"),
     IN_PROCESSING("Em processamento"),
     ALREADY("Pronto"),
-    PAID("Pago"),
     DELIVERING("Saiu para entrega"),
     DELIVERED("Entregue"),
     CANCELED("Cancelado");
@@ -26,7 +25,6 @@ public enum OrdersStatusEnum {
         return Arrays.stream(OrdersStatusEnum.values()).filter(ordersStatusEnum -> ordersStatusEnum.equals(OrdersStatusEnum.AWAITING)
                 || ordersStatusEnum.equals(OrdersStatusEnum.IN_PROCESSING)
                 || ordersStatusEnum.equals(OrdersStatusEnum.ALREADY)
-                || ordersStatusEnum.equals(OrdersStatusEnum.PAID)
                 || ordersStatusEnum.equals(OrdersStatusEnum.CANCELED)).collect(Collectors.toList()
         );
     }

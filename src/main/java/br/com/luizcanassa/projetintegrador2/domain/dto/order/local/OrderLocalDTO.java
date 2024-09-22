@@ -13,5 +13,7 @@ public class OrderLocalDTO {
 
     private BigDecimal totalAmount;
 
+    private Boolean paid;
+
     private String status;
 }

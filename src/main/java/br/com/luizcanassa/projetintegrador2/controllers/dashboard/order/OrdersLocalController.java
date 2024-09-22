@@ -1,6 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalEditDTO;
 import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
@@ -90,12 +91,16 @@ public class OrdersLocalController {
     }
 
     @PostMapping("/details/{id}/edit-status")
-    public String editStatusAction(@PathVariable("id") final Long id, Model model, final String status) {
+    public String editStatusAction(
+            @PathVariable("id") final Long id,
+            final Model model,
+            @ModelAttribute final OrderLocalEditDTO orderLocalEditDTO
+            ) {
         model.addAttribute("page", PageEnum.ORDERS_LOCAL_DETAILS);
         model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
         model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
 
-        orderLocalService.editStatus(id, status);
+        orderLocalService.editStatus(id, orderLocalEditDTO);
 
         return "redirect:/dashboard/orders/local";
     }

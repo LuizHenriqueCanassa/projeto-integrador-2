@@ -27,6 +27,7 @@
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ID</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Comanda</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Valor</th>
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pago?</th>
                                         <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                                         <th></th>
                                     </tr>
@@ -41,6 +42,9 @@
                                         </td>
                                         <td class="align-middle text-center">
                                             <p class="text-secondary text-xs font-weight-bold" th:text="'R$ ' + ${order.getTotalAmount()}"></p>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <p class="text-secondary text-xs font-weight-bold" th:text="${order.getPaid()} ? 'Sim' : 'Não'"></p>
                                         </td>
                                         <td class="align-middle text-center">
                                             <p class="text-secondary text-xs font-weight-bold" th:text="${order.getStatus()}"></p>

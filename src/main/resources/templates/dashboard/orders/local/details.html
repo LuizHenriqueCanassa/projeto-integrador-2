@@ -63,6 +63,17 @@
                   </div>
                 </div>
               </div>
+              <div class="row mt-3 mb-2">
+                <div class="col">
+                  <div class="input-group input-group-outline focused is-focused">
+                    <label for="paid" class="form-label">Pago?</label>
+                    <select name="paid" id="paid" class="form-control">
+                      <option th:value="0" th:selected="${orderDetails.getPaid() == false}">Não</option>
+                      <option th:value="1" th:selected="${orderDetails.getPaid() == true}">Sim</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
               <button  class="btn bg-gradient-warning my-4" type="submit">Editar status</button>
             </form>
           </div>
