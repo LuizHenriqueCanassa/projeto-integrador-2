@@ -2,10 +2,13 @@ package br.com.luizcanassa.projetintegrador2.service.impl;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDetailDTO;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderDeliveryEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
+import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.OrderNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.OrderMapper;
 import br.com.luizcanassa.projetintegrador2.repository.CustomerRepository;
@@ -56,6 +59,11 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
     }
 
     @Override
+    public OrderDeliveryDetailDTO findById(final Long id) {
+        return orderMapper.toDeliveryOrderDetailDTO(orderDeliveryRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado")));
+    }
+
+    @Override
     @Transactional(rollbackFor = {CustomerNotFoundException.class, ProductNotFoundException.class})
     public void create(final CreateOrderDeliveryDTO createOrderDeliveryDTO) {
         final var order = new OrderEntity();
@@ -78,6 +86,15 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
 
         orderDeliveryRepository.save(orderDelivery);
         orderRepository.save(savedOrder);
+    }
+
+    @Override
+    public void editStatus(final Long id, final String status) {
+        final var order = orderDeliveryRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado!")).getOrder();
+
+        order.setStatus(OrdersStatusEnum.valueOf(status));
+
+        orderRepository.save(order);
     }
 
     private void fillOrderAmount(final OrderEntity orderEntity) {

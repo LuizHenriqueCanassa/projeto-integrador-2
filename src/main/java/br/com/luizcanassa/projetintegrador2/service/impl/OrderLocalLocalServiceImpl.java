@@ -7,7 +7,7 @@ import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderLocalEntity;
 import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
-import br.com.luizcanassa.projetintegrador2.exception.OrderLocalNotFoundException;
+import br.com.luizcanassa.projetintegrador2.exception.OrderNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
 import br.com.luizcanassa.projetintegrador2.mapper.OrderMapper;
 import br.com.luizcanassa.projetintegrador2.repository.OrderLocalRepository;
@@ -66,12 +66,12 @@ public class OrderLocalLocalServiceImpl implements OrderLocalService {
 
     @Override
     public OrderLocalDetailDTO findById(final Long id) {
-        return orderMapper.toLocalOrderDetailDTO(orderLocalRepository.findById(id).orElseThrow(() -> new OrderLocalNotFoundException("Pedido não encontrado!")));
+        return orderMapper.toLocalOrderDetailDTO(orderLocalRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado!")));
     }
 
     @Override
     public void editStatus(final Long id, final String status) {
-        final var order = orderLocalRepository.findById(id).orElseThrow(() -> new OrderLocalNotFoundException("Pedido não encontrado!")).getOrder();
+        final var order = orderLocalRepository.findById(id).orElseThrow(() -> new OrderNotFoundException("Pedido não encontrado!")).getOrder();
 
         order.setStatus(OrdersStatusEnum.valueOf(status));
 

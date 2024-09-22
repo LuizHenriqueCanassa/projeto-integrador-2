@@ -26,7 +26,8 @@ public enum OrdersStatusEnum {
         return Arrays.stream(OrdersStatusEnum.values()).filter(ordersStatusEnum -> ordersStatusEnum.equals(OrdersStatusEnum.AWAITING)
                 || ordersStatusEnum.equals(OrdersStatusEnum.IN_PROCESSING)
                 || ordersStatusEnum.equals(OrdersStatusEnum.ALREADY)
-                || ordersStatusEnum.equals(OrdersStatusEnum.PAID)).collect(Collectors.toList()
+                || ordersStatusEnum.equals(OrdersStatusEnum.PAID)
+                || ordersStatusEnum.equals(OrdersStatusEnum.CANCELED)).collect(Collectors.toList()
         );
     }
 }

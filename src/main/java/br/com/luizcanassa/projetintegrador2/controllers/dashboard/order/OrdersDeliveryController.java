@@ -1,6 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.controllers.dashboard.order;
 
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.enums.OrdersStatusEnum;
 import br.com.luizcanassa.projetintegrador2.domain.enums.PageEnum;
 import br.com.luizcanassa.projetintegrador2.exception.CustomerNotFoundException;
 import br.com.luizcanassa.projetintegrador2.exception.ProductNotFoundException;
@@ -12,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -80,5 +78,27 @@ public class OrdersDeliveryController {
             log.error(e.getMessage());
             return "redirect:/dashboard/orders/delivery?createOrderDeliveryError=unknown-error";
         }
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable("id") final Long id, Model model) {
+        model.addAttribute("page", PageEnum.ORDERS_DELIVERY_DETAILS);
+        model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+        model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+        model.addAttribute("orderDetails", orderDeliveryService.findById(id));
+        model.addAttribute("orderStatus", OrdersStatusEnum.values());
+
+        return "dashboard/orders/delivery/details";
+    }
+
+    @PostMapping("/details/{id}/edit-status")
+    public String editStatusAction(@PathVariable("id") final Long id, Model model, final String status) {
+        model.addAttribute("page", PageEnum.ORDERS_DELIVERY_DETAILS);
+        model.addAttribute("displayName", AuthenticationUtils.getDisplayName());
+        model.addAttribute("roles", AuthenticationUtils.getUserAuthorities());
+
+        orderDeliveryService.editStatus(id, status);
+
+        return "redirect:/dashboard/orders/delivery";
     }
 }
