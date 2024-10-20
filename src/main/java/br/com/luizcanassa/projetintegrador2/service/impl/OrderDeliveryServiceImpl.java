@@ -1,9 +1,7 @@
 package br.com.luizcanassa.projetintegrador2.service.impl;
 
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.CreateOrderDeliveryDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryDetailDTO;
-import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.OrderDeliveryEditDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.OrderSummaryDTO;
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.delivery.*;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderDeliveryEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderEntity;
 import br.com.luizcanassa.projetintegrador2.domain.entity.OrderItemEntity;
@@ -17,14 +15,16 @@ import br.com.luizcanassa.projetintegrador2.repository.OrderDeliveryRepository;
 import br.com.luizcanassa.projetintegrador2.repository.OrderRepository;
 import br.com.luizcanassa.projetintegrador2.repository.ProductRepository;
 import br.com.luizcanassa.projetintegrador2.service.OrderDeliveryService;
+import br.com.luizcanassa.projetintegrador2.utils.DateUtils;
 import br.com.luizcanassa.projetintegrador2.utils.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,6 +97,41 @@ public class OrderDeliveryServiceImpl implements OrderDeliveryService {
         order.setPaid(orderDeliveryEditDTO.getPaid());
 
         orderRepository.save(order);
+    }
+
+    @Override
+    public Integer getQuantityOrdersDeliveryToday() {
+        return orderDeliveryRepository.countByCreatedAtBetween(LocalDate.now().atStartOfDay(), LocalDate.now().atTime(LocalTime.MAX));
+    }
+
+    @Override
+    public OrderSummaryDTO getQuantityOrdersDeliveryLast7Days() {
+        final OrderSummaryDTO orderDeliverySummary = new OrderSummaryDTO();
+        final Map<String, Long> quantityByDayOfWeek = new LinkedHashMap<>();
+
+        final List<String> nameOfDayWeekLast7Days = DateUtils.getLastShortNameDayOfWeek(7);
+
+        orderDeliverySummary.setLast7DaysOfWeek(nameOfDayWeekLast7Days);
+
+        final var ordersDeliveryLast7Days = orderDeliveryRepository.findAllByCreatedAtBetween(
+                LocalDate.now().minusDays(7).atStartOfDay(),
+                LocalDate.now().atTime(LocalTime.MAX)
+        );
+
+        final var ordersPerDayOfWeek = ordersDeliveryLast7Days.stream().collect(
+                Collectors.groupingBy(
+                        orderDelivery -> DateUtils.getShortNameDayOfWeek(orderDelivery.getCreatedAt()),
+                        Collectors.counting()
+                )
+        );
+
+        nameOfDayWeekLast7Days.forEach(day -> {
+            quantityByDayOfWeek.put(day, ordersPerDayOfWeek.getOrDefault(day, 0L));
+        });
+
+        orderDeliverySummary.setOrdersQuantityByDay(quantityByDayOfWeek);
+
+        return orderDeliverySummary;
     }
 
     private void fillOrderAmount(final OrderEntity orderEntity) {

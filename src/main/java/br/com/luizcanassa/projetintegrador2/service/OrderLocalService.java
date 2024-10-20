@@ -1,5 +1,6 @@
 package br.com.luizcanassa.projetintegrador2.service;
 
+import br.com.luizcanassa.projetintegrador2.domain.dto.order.OrderSummaryDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.CreateOrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDTO;
 import br.com.luizcanassa.projetintegrador2.domain.dto.order.local.OrderLocalDetailDTO;
@@ -17,4 +18,8 @@ public interface OrderLocalService {
     OrderLocalDetailDTO findById(Long id);
 
     void editStatus(Long id, OrderLocalEditDTO orderLocalEditDTO);
+
+    Integer getQuantityOrdersLocalToday();
+
+    OrderSummaryDTO getQuantityOrdersLocalLast7Days();
 }

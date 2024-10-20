@@ -13,7 +13,7 @@ public class ProductEditDTO {
     private Long id;
 
     @NotNull(message = "O campo Nome é obrigatório")
-    @Size(min = 10, max = 100, message = "O campo Nome deve possuir entra 10 e 100 caracteres")
+    @Size(min = 5, max = 100, message = "O campo Nome deve possuir entra 10 e 100 caracteres")
     private String name;
 
     @NotNull(message = "O campo Descrição é obrigatório")
