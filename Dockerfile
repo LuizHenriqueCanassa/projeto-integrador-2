@@ -5,7 +5,7 @@ RUN apt-get install openjdk-21-jdk -y
 
 COPY . .
 
-RUN ./gradlew clean build -x test --info
+RUN ./gradlew build -x test --info
 
 FROM luizhcanassa/ubuntu-openjdk-21:latest
 LABEL authors="luiz-henrique-canassa"
