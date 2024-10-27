@@ -29,6 +29,7 @@ public class SecurityConfig {
                                 "/json/**",
                                 "/login",
                                 "/",
+                                "/actuator/**",
                                 "/orders-table/**"
                         ).permitAll()
                         .requestMatchers("/dashboard/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ROOT")
