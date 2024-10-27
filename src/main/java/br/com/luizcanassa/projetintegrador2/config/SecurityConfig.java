@@ -28,7 +28,8 @@ public class SecurityConfig {
                                 "/img/**",
                                 "/json/**",
                                 "/login",
-                                "/"
+                                "/",
+                                "/orders-table/**"
                         ).permitAll()
                         .requestMatchers("/dashboard/users/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_ROOT")
                         .anyRequest().authenticated()

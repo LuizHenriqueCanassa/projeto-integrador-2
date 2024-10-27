@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public enum PageEnum {
     DASHBOARD("dashboard", "Página Inicial"),
+    ORDERS_TABLE("orders-table", "Realizar pedido"),
     LOGIN("login", "Login"),
     USERS("users", "Usuários"),
     CREATE_USERS("users", "Cadastrar Usuário"),
