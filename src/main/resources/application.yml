@@ -9,5 +9,9 @@ spring:
     static-path-pattern: /static/**
   jpa:
     open-in-view: off
+  thymeleaf:
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
 server:
   port: 8080
