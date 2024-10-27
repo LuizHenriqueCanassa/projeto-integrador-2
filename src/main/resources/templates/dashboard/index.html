@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="~{/template/header :: site_header}"></head>
+    <head th:replace="~{template/header :: site_header}"></head>
     <body class="g-sidenav-show  bg-gray-200">
-        <aside th:replace="~{/template/side-navbar :: side_navbar}"></aside>
+        <aside th:replace="~{template/side-navbar :: side_navbar}"></aside>
         <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-            <nav th:replace="~{/template/navbar :: navbar}"></nav>
+            <nav th:replace="~{template/navbar :: navbar}"></nav>
             <div class="container-fluid py-4">
                 <div class="row">
                     <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
@@ -128,7 +128,7 @@
                 </div>
             </div>
         </main>
-        <div th:replace="~{/template/scripts :: footer_scripts}"></div>
+        <div th:replace="~{template/scripts :: footer_scripts}"></div>
         <script th:inline="javascript" type="text/javascript">
             /*<![CDATA[*/
             var orderDeliveries = document.getElementById("deliveries-last-7-days").getContext("2d");
