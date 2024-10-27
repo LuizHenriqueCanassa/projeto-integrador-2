@@ -10,7 +10,7 @@ spring:
   jpa:
     open-in-view: off
   thymeleaf:
-    mode: HTML5
+    mode: HTML
     prefix: classpath:/templates/
     suffix: .html
 server:

@@ -5,7 +5,7 @@ spring:
     password: ${DATABASE_PASS}
     driver-class-name: org.postgresql.Driver
   thymeleaf:
-    mode: HTML5
+    mode: HTML
     prefix: classpath:/templates/
     suffix: .html
 server:
