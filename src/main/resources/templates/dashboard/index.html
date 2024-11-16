@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="text-end pt-1">
                                     <p class="text-sm mb-0 text-capitalize">Faturamento do dia</p>
-                                    <h4 class="mb-0" th:text="'R$ ' + ${totalBillingOfDay}"></h4>
+                                    <h4 class="mb-0" th:text="'R$ ' + ${totalBillingOfDay == null ? 0 : totalBillingOfDay}"></h4>
                                 </div>
                             </div>
                             <div class="card-footer p-1"></div>
@@ -305,7 +305,7 @@
                 data: {
                     labels: billingLast8Months.last8Months,
                     datasets: [{
-                        label: "Pedidos",
+                        label: "Faturamento",
                         tension: 0,
                         borderWidth: 0,
                         pointRadius: 5,
